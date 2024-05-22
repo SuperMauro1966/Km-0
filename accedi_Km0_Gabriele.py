@@ -21,9 +21,9 @@ pwd=input("Inserisci la password: ")
 
 cur=conn.cursor()
 cur.execute(
-    f"SELECT COUNT(*) FROM account WHERE email = '{email}' AND password = '{pwd}';")
+    f"SELECT COUNT(id) FROM account WHERE email='{email}' AND password=PASSWORD('{pwd}');")
 
-count = cur.fetchone()[0]
+count=cur.fetchone()[0]
 conn.commit()
 
 # Verifica se c'è almeno una corrispondenza

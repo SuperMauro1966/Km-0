@@ -1,6 +1,6 @@
 import mariadb
 import sys
-car=input("digita le prime lettere per cercare un cognome: ")
+lett=input("digita le prime lettere per cercare un cognome: ")
 
 try:
     conn=mariadb.connect(
@@ -15,7 +15,7 @@ except mariadb.Error as e:
     sys.exit(1)
 
 cur=conn.cursor()
-cur.execute(f"SELECT first_name,last_name FROM employees WHERE last_name LIKE '{car}%';")
+cur.execute(f"SELECT first_name,last_name FROM employees WHERE last_name LIKE '{lett}%';")
 
 for (first_name, last_name) in cur:
     print(f"First Name: {first_name}, Last Name: {last_name}")
