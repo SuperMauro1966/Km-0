@@ -20,6 +20,7 @@ DROP DATABASE IF EXISTS `km-0`;
 CREATE DATABASE IF NOT EXISTS `km-0` /*!40100 DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci */;
 USE `km-0`;
 
+
 -- Dump della struttura di tabella km-0.tbcredential
 DROP TABLE IF EXISTS `tbcredential`;
 CREATE TABLE IF NOT EXISTS `tbcredential` (
@@ -29,11 +30,22 @@ CREATE TABLE IF NOT EXISTS `tbcredential` (
   PRIMARY KEY (`idCredential`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dump dei dati della tabella km-0.tbcredential: ~2 rows (circa)
-DELETE FROM `tbcredential`;
-INSERT INTO `tbcredential` (`idCredential`, `pswd`, `email`) VALUES
-	(1, '1234', 'Sergio'),
-	(2, '1234', 'Gabriele');
+-- Dump della struttura di tabella km-0.tbcliente
+DROP TABLE IF EXISTS `tbcliente`;
+CREATE TABLE IF NOT EXISTS `tbcliente` (
+  `idCliente` int(11) NOT NULL AUTO_INCREMENT,
+  `citta` varchar(34) NOT NULL,
+  `provincia` varchar(34) NOT NULL,
+  `via` varchar(255) NOT NULL,
+  `nome` varchar(255) NOT NULL,
+  `cognome` varchar(255) NOT NULL,
+  `CF` varchar(16) NOT NULL,
+  `telefono` varchar(14) NOT NULL,
+  `idCredential` int(11) NOT NULL,
+  PRIMARY KEY (`idCliente`),
+  KEY `FK_tbcliente_idCredential_tbcredential_idCredential` (`idCredential`),
+  CONSTRAINT `FK_tbcliente_idCredential_tbcredential_idCredential` FOREIGN KEY (`idCredential`) REFERENCES `tbcredential` (`idCredential`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Dump della struttura di tabella km-0.tbvenditore
 DROP TABLE IF EXISTS `tbvenditore`;
@@ -48,6 +60,15 @@ CREATE TABLE IF NOT EXISTS `tbvenditore` (
   KEY `codCredential` (`idCredential`) USING BTREE,
   CONSTRAINT `tbvenditore_ibfk_1` FOREIGN KEY (`idCredential`) REFERENCES `tbcredential` (`idCredential`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- Dump dei dati della tabella km-0.tbcliente: ~0 rows (circa)
+DELETE FROM `tbcliente`;
+
+-- Dump dei dati della tabella km-0.tbcredential: ~2 rows (circa)
+DELETE FROM `tbcredential`;
+INSERT INTO `tbcredential` (`idCredential`, `pswd`, `email`) VALUES
+	(1, '1234', 'Sergio'),
+	(2, '1234', 'Gabriele');
 
 -- Dump dei dati della tabella km-0.tbvenditore: ~0 rows (circa)
 DELETE FROM `tbvenditore`;
