@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `tbcliente`;
 CREATE TABLE IF NOT EXISTS `tbcliente` (
   `idCliente` int(11) NOT NULL AUTO_INCREMENT,
   `citta` varchar(34) NOT NULL,
-  `provincia` varchar(2) NOT NULL,
+  `provincia` varchar(34) NOT NULL,
   `via` varchar(255) NOT NULL,
   `nome` varchar(255) NOT NULL,
   `cognome` varchar(255) NOT NULL,
@@ -35,9 +35,10 @@ CREATE TABLE IF NOT EXISTS `tbcliente` (
   PRIMARY KEY (`idCliente`),
   KEY `FK_tbcliente_idCredential_tbcredential_idCredential` (`idCredential`),
   CONSTRAINT `FK_tbcliente_idCredential_tbcredential_idCredential` FOREIGN KEY (`idCredential`) REFERENCES `tbcredential` (`idCredential`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
-
+-- Dump dei dati della tabella km-0.tbcliente: ~0 rows (circa)
+DELETE FROM `tbcliente`;
 
 -- Dump della struttura di tabella km-0.tbcredential
 DROP TABLE IF EXISTS `tbcredential`;
@@ -46,42 +47,72 @@ CREATE TABLE IF NOT EXISTS `tbcredential` (
   `pswd` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`idCredential`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dump dei dati della tabella km-0.tbcredential: ~4 rows (circa)
+-- Dump dei dati della tabella km-0.tbcredential: ~2 rows (circa)
 DELETE FROM `tbcredential`;
 INSERT INTO `tbcredential` (`idCredential`, `pswd`, `email`) VALUES
 	(1, '1234', 'Sergio'),
 	(2, '1234', 'Gabriele');
 
+-- Dump della struttura di tabella km-0.tbordine
+DROP TABLE IF EXISTS `tbordine`;
+CREATE TABLE IF NOT EXISTS `tbordine` (
+  `idOrdine` int(11) NOT NULL AUTO_INCREMENT,
+  `stato` varchar(10) NOT NULL,
+  `data` datetime NOT NULL,
+  `idRecensione` int(11) NOT NULL,
+  PRIMARY KEY (`idOrdine`),
+  KEY `FK_tbordine_idRecensione_tbpagameneto_idPagamento` (`idRecensione`),
+  CONSTRAINT `FK_tbordine_idRecensione_tbpagameneto_idPagamento` FOREIGN KEY (`idRecensione`) REFERENCES `tbpagamento` (`idPagamento`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- Dump dei dati della tabella km-0.tbordine: ~0 rows (circa)
+DELETE FROM `tbordine`;
+
+-- Dump della struttura di tabella km-0.tbpagamento
+DROP TABLE IF EXISTS `tbpagamento`;
+CREATE TABLE IF NOT EXISTS `tbpagamento` (
+  `idPagamento` int(11) NOT NULL AUTO_INCREMENT,
+  `descrizione` text NOT NULL,
+  `nome` varchar(255) NOT NULL,
+  PRIMARY KEY (`idPagamento`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- Dump dei dati della tabella km-0.tbpagamento: ~0 rows (circa)
+DELETE FROM `tbpagamento`;
+
+-- Dump della struttura di tabella km-0.tbrecensione
+DROP TABLE IF EXISTS `tbrecensione`;
+CREATE TABLE IF NOT EXISTS `tbrecensione` (
+  `idRecensione` int(11) NOT NULL AUTO_INCREMENT,
+  `recensione` text NOT NULL,
+  `valutazione` int(11) NOT NULL,
+  `idCliente` int(11) NOT NULL,
+  PRIMARY KEY (`idRecensione`),
+  KEY `FK_tbrecensione_idCliente_tbcliente_idCliente` (`idCliente`),
+  CONSTRAINT `FK_tbrecensione_idCliente_tbcliente_idCliente` FOREIGN KEY (`idCliente`) REFERENCES `tbcliente` (`idCliente`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- Dump dei dati della tabella km-0.tbrecensione: ~0 rows (circa)
+DELETE FROM `tbrecensione`;
+
 -- Dump della struttura di tabella km-0.tbvenditore
 DROP TABLE IF EXISTS `tbvenditore`;
 CREATE TABLE IF NOT EXISTS `tbvenditore` (
   `idVenditore` int(11) NOT NULL AUTO_INCREMENT,
-  `sitoweb` varchar(255) DEFAULT NULL,
-  `partitaIVA` int(11) DEFAULT NULL,
-  `ragioneSociale` varchar(255) DEFAULT NULL,
-  `CF` varchar(16) DEFAULT NULL,
-  `idCredential` int(11) DEFAULT NULL,
+  `sitoweb` varchar(255) NOT NULL,
+  `partitaIVA` int(11) NOT NULL,
+  `ragioneSociale` varchar(255) NOT NULL,
+  `CF` varchar(16) NOT NULL,
+  `idCredential` int(11) NOT NULL,
   PRIMARY KEY (`idVenditore`),
   KEY `codCredential` (`idCredential`) USING BTREE,
-  CONSTRAINT `tbvenditore_ibfk_1` FOREIGN KEY (`idCredential`) REFERENCES `tbcredential` (`idCredential`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  CONSTRAINT `FK_tbvenditore_idCredential_tbcredential_idCredential` FOREIGN KEY (`idCredential`) REFERENCES `tbcredential` (`idCredential`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
-
-
--- Dump della struttura di vista km-0.vwadmin
-DROP VIEW IF EXISTS `vwadmin`;
--- Creazione di una tabella temporanea per risolvere gli errori di dipendenza della vista
-CREATE TABLE `vwadmin` (
-	`idCredential` INT(11) NOT NULL,
-	`email` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
-	`pswd` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci'
-) ENGINE=MyISAM;
-
--- Rimozione temporanea di tabella e creazione della struttura finale della vista
-DROP TABLE IF EXISTS `vwadmin`;
-CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vwadmin` AS select `tbcredential`.`idCredential` AS `idCredential`,`tbcredential`.`email` AS `email`,`tbcredential`.`pswd` AS `pswd` from `tbcredential` where !(`tbcredential`.`idCredential` in ((select `tbvenditore`.`idCredential` from `tbvenditore`) union (select `tbcliente`.`idCredential` from `tbcliente`)));
+-- Dump dei dati della tabella km-0.tbvenditore: ~0 rows (circa)
+DELETE FROM `tbvenditore`;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
