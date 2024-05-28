@@ -1,0 +1,9 @@
+﻿PROGETTO KM-0
+CONSEGNA
+Si vuole creare un’applicazione che permetta agli utenti di un territorio provinciale di vendere i loro prodotti a km 0 ed i loro servizi; quest’ultimi devono avere l’opportunità di creare annunci con su scritto caratteristiche e prezzo.
+I venditori possono vedere delle statistiche riguardo i prodotti venduti e anche la quantità di denaro guadagnata in un arco di tempo.
+Il cliente avrà la possibilità di effettuare acquisti e di alimentare il sistema di recensioni del venditore, del prodotto e dell’attività, tale sistema non è accessibile ai venditori.
+Entrambe le figure per poter svolgere queste attività dovranno autenticarsi tramite: nome utente, email, password, codice fiscale, numero di telefono e residenza; dovranno poi indicare se utilizzeranno l’app per vendere o acquistare prodotti (il venditore può solo vendere usufruire dei servizi mentre il cliente può solo acquistare prodotti e servizi) e nel primo caso dovranno indicare il tipo di attività posseduta.
+Il venditore dovrà inserire il tipo di pagamento desiderato (bonifico, PayPal, Satispay, contanti, carta di credito).
+Si vuole inserire anche una mappa geografica per cercare i venditori nei dintorni ed implementare un sistema che gestisce le ricerche dei prodotti, venditori o attività nell’applicazione.
+Nell’applicazione è anche presente un calendario nel quale sono         segnate le date degli eventi nei dintorni.
