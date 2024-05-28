@@ -55,6 +55,24 @@ INSERT INTO `tbcredential` (`idCredential`, `pswd`, `email`) VALUES
 	(1, '1234', 'Sergio'),
 	(2, '1234', 'Gabriele');
 
+-- Dump della struttura di tabella km-0.tbevento
+DROP TABLE IF EXISTS `tbevento`;
+CREATE TABLE IF NOT EXISTS `tbevento` (
+  `idEvento` int(11) NOT NULL AUTO_INCREMENT,
+  `descrizione` text NOT NULL,
+  `dataInizio` datetime NOT NULL,
+  `dataFine` datetime NOT NULL,
+  `nome` varchar(255) NOT NULL,
+  `condiviso` tinyint(1) NOT NULL,
+  `idCredential` int(11) NOT NULL,
+  PRIMARY KEY (`idEvento`),
+  KEY `FK_tbevento_idCredential_tbcredential_idCredential` (`idCredential`) USING BTREE,
+  CONSTRAINT `FK_tbevento_idCredential_tbcredential_idCredential` FOREIGN KEY (`idCredential`) REFERENCES `tbcredential` (`idCredential`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- Dump dei dati della tabella km-0.tbevento: ~0 rows (circa)
+DELETE FROM `tbevento`;
+
 -- Dump della struttura di tabella km-0.tbordine
 DROP TABLE IF EXISTS `tbordine`;
 CREATE TABLE IF NOT EXISTS `tbordine` (
@@ -96,6 +114,34 @@ CREATE TABLE IF NOT EXISTS `tbrecensione` (
 
 -- Dump dei dati della tabella km-0.tbrecensione: ~0 rows (circa)
 DELETE FROM `tbrecensione`;
+
+-- Dump della struttura di tabella km-0.tbservizio
+DROP TABLE IF EXISTS `tbservizio`;
+CREATE TABLE IF NOT EXISTS `tbservizio` (
+  `idServizio` int(11) NOT NULL AUTO_INCREMENT,
+  `descrizione` text NOT NULL,
+  `nome` varchar(255) NOT NULL,
+  PRIMARY KEY (`idServizio`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- Dump dei dati della tabella km-0.tbservizio: ~0 rows (circa)
+DELETE FROM `tbservizio`;
+
+-- Dump della struttura di tabella km-0.tbubicazione
+DROP TABLE IF EXISTS `tbubicazione`;
+CREATE TABLE IF NOT EXISTS `tbubicazione` (
+  `idUbicazione` int(11) NOT NULL AUTO_INCREMENT,
+  `citta` varchar(255) NOT NULL,
+  `provincia` varchar(2) NOT NULL,
+  `via` varchar(255) NOT NULL,
+  `fissa` tinyint(1) NOT NULL,
+  `orario` text NOT NULL,
+  `attiva` tinyint(1) NOT NULL,
+  PRIMARY KEY (`idUbicazione`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- Dump dei dati della tabella km-0.tbubicazione: ~0 rows (circa)
+DELETE FROM `tbubicazione`;
 
 -- Dump della struttura di tabella km-0.tbvenditore
 DROP TABLE IF EXISTS `tbvenditore`;
