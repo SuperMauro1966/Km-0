@@ -16,12 +16,10 @@
 
 
 -- Dump della struttura del database km-0
-DROP DATABASE IF EXISTS `km-0`;
 CREATE DATABASE IF NOT EXISTS `km-0` /*!40100 DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci */;
 USE `km-0`;
 
 -- Dump della struttura di tabella km-0.tbcliente
-DROP TABLE IF EXISTS `tbcliente`;
 CREATE TABLE IF NOT EXISTS `tbcliente` (
   `idCliente` int(11) NOT NULL AUTO_INCREMENT,
   `citta` varchar(34) NOT NULL,
@@ -41,7 +39,6 @@ CREATE TABLE IF NOT EXISTS `tbcliente` (
 DELETE FROM `tbcliente`;
 
 -- Dump della struttura di tabella km-0.tbcredential
-DROP TABLE IF EXISTS `tbcredential`;
 CREATE TABLE IF NOT EXISTS `tbcredential` (
   `idCredential` int(11) NOT NULL AUTO_INCREMENT,
   `pswd` varchar(255) NOT NULL,
@@ -56,7 +53,6 @@ INSERT INTO `tbcredential` (`idCredential`, `pswd`, `email`) VALUES
 	(2, '1234', 'Gabriele');
 
 -- Dump della struttura di tabella km-0.tbevento
-DROP TABLE IF EXISTS `tbevento`;
 CREATE TABLE IF NOT EXISTS `tbevento` (
   `idEvento` int(11) NOT NULL AUTO_INCREMENT,
   `descrizione` text NOT NULL,
@@ -74,7 +70,6 @@ CREATE TABLE IF NOT EXISTS `tbevento` (
 DELETE FROM `tbevento`;
 
 -- Dump della struttura di tabella km-0.tbordine
-DROP TABLE IF EXISTS `tbordine`;
 CREATE TABLE IF NOT EXISTS `tbordine` (
   `idOrdine` int(11) NOT NULL AUTO_INCREMENT,
   `stato` varchar(10) NOT NULL,
@@ -89,7 +84,6 @@ CREATE TABLE IF NOT EXISTS `tbordine` (
 DELETE FROM `tbordine`;
 
 -- Dump della struttura di tabella km-0.tbpagamento
-DROP TABLE IF EXISTS `tbpagamento`;
 CREATE TABLE IF NOT EXISTS `tbpagamento` (
   `idPagamento` int(11) NOT NULL AUTO_INCREMENT,
   `descrizione` text NOT NULL,
@@ -101,7 +95,6 @@ CREATE TABLE IF NOT EXISTS `tbpagamento` (
 DELETE FROM `tbpagamento`;
 
 -- Dump della struttura di tabella km-0.tbrecensione
-DROP TABLE IF EXISTS `tbrecensione`;
 CREATE TABLE IF NOT EXISTS `tbrecensione` (
   `idRecensione` int(11) NOT NULL AUTO_INCREMENT,
   `recensione` text NOT NULL,
@@ -116,7 +109,6 @@ CREATE TABLE IF NOT EXISTS `tbrecensione` (
 DELETE FROM `tbrecensione`;
 
 -- Dump della struttura di tabella km-0.tbservizio
-DROP TABLE IF EXISTS `tbservizio`;
 CREATE TABLE IF NOT EXISTS `tbservizio` (
   `idServizio` int(11) NOT NULL AUTO_INCREMENT,
   `descrizione` text NOT NULL,
@@ -128,7 +120,6 @@ CREATE TABLE IF NOT EXISTS `tbservizio` (
 DELETE FROM `tbservizio`;
 
 -- Dump della struttura di tabella km-0.tbubicazione
-DROP TABLE IF EXISTS `tbubicazione`;
 CREATE TABLE IF NOT EXISTS `tbubicazione` (
   `idUbicazione` int(11) NOT NULL AUTO_INCREMENT,
   `citta` varchar(255) NOT NULL,
@@ -144,7 +135,6 @@ CREATE TABLE IF NOT EXISTS `tbubicazione` (
 DELETE FROM `tbubicazione`;
 
 -- Dump della struttura di tabella km-0.tbvenditore
-DROP TABLE IF EXISTS `tbvenditore`;
 CREATE TABLE IF NOT EXISTS `tbvenditore` (
   `idVenditore` int(11) NOT NULL AUTO_INCREMENT,
   `sitoweb` varchar(255) NOT NULL,
@@ -159,6 +149,18 @@ CREATE TABLE IF NOT EXISTS `tbvenditore` (
 
 -- Dump dei dati della tabella km-0.tbvenditore: ~0 rows (circa)
 DELETE FROM `tbvenditore`;
+
+-- Dump della struttura di vista km-0.vwadmin
+-- Creazione di una tabella temporanea per risolvere gli errori di dipendenza della vista
+CREATE TABLE `vwadmin` (
+	`idCredential` INT(11) NOT NULL,
+	`email` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
+	`pswd` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci'
+) ENGINE=MyISAM;
+
+-- Rimozione temporanea di tabella e creazione della struttura finale della vista
+DROP TABLE IF EXISTS `vwadmin`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vwadmin` AS select `tbcredential`.`idCredential` AS `idCredential`,`tbcredential`.`email` AS `email`,`tbcredential`.`pswd` AS `pswd` from `tbcredential` where !(`tbcredential`.`idCredential` in ((select `tbvenditore`.`idCredential` from `tbvenditore`) union (select `tbcliente`.`idCredential` from `tbcliente`)));
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
