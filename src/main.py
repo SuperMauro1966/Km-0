@@ -73,7 +73,7 @@ except mariadb.Error as e:
 
 cur=conn.cursor()
 while True:
-    scelta=int(input("Scegli un'opzione: \n1. per accedere\n2. per registrarsi\n3. per uscire"))
+    scelta=int(input("Scegli un'opzione: \n1. per accedere\n2. per registrarsi\n3. per uscire\n"))
     while scelta<1 or scelta>3:
         scelta=int(input("\nScegli un'opzione: \n1. per accedere\n2. per registrarsi\n3. per uscire\n"))
 
