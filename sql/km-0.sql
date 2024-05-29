@@ -78,7 +78,7 @@ DROP TABLE IF EXISTS `tbcredential`;
 CREATE TABLE IF NOT EXISTS `tbcredential` (
   `idCredential` int(11) NOT NULL AUTO_INCREMENT,
   `pswd` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL DEFAULT '',
+  `email` varchar(255) NOT NULL,
   `attivo` tinyint(1) DEFAULT 1,
   PRIMARY KEY (`idCredential`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
