@@ -283,29 +283,30 @@ CREATE TABLE `vwcliente` (
 	`attivo` TINYINT(1) NULL
 ) ENGINE=MyISAM;
 
+-- Dump della struttura di vista km-0.vwvenditore
+DROP VIEW IF EXISTS `vwvenditore`;
+-- Creazione di una tabella temporanea per risolvere gli errori di dipendenza della vista
+CREATE TABLE `vwvenditore` (
+	`idVenditore` INT(11) NOT NULL,
+	`sitoweb` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
+	`partitaIVA` INT(11) NOT NULL,
+	`ragioneSociale` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
+	`CF` VARCHAR(16) NOT NULL COLLATE 'latin1_swedish_ci',
+	`idCredential` INT(11) NOT NULL,
+	`email` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
+	`pswd` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
+	`attivo` TINYINT(1) NULL
+) ENGINE=MyISAM;
+
 -- Rimozione temporanea di tabella e creazione della struttura finale della vista
 DROP TABLE IF EXISTS `vwcliente`;
 CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vwcliente` AS select `tbcliente`.`idCliente` AS `idCliente`,`tbcliente`.`citta` AS `citta`,`tbcliente`.`provincia` AS `provincia`,`tbcliente`.`via` AS `via`,`tbcliente`.`nome` AS `nome`,`tbcliente`.`cognome` AS `cognome`,`tbcliente`.`CF` AS `CF`,`tbcliente`.`telefono` AS `telefono`,`tbcliente`.`idCredential` AS `idCredential`,`tbcredential`.`email` AS `email`,`tbcredential`.`pswd` AS `pswd`,`tbcredential`.`attivo` AS `attivo` from (`tbcliente` join `tbcredential` on(`tbcredential`.`idCredential` = `tbcliente`.`idCredential`));
+
+DROP TABLE IF EXISTS `vwvenditore`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vwvenditore` AS select `tv`.`idVenditore` AS `idVenditore`,`tv`.`sitoweb` AS `sitoweb`,`tv`.`partitaIVA` AS `partitaIVA`,`tv`.`ragioneSociale` AS `ragioneSociale`,`tv`.`CF` AS `CF`,`tv`.`idCredential` AS `idCredential`,`tc`.`email` AS `email`,`tc`.`pswd` AS `pswd`,`tc`.`attivo` AS `attivo` from (`tbvenditore` `tv` join `tbcredential` `tc` on(`tv`.`idCredential` = `tc`.`idCredential`));
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
-
--- --------------------------------------------------------
--- Host:                         127.0.0.1
--- Versione server:              10.6.18-MariaDB - mariadb.org binary distribution
--- S.O. server:                  Win64
--- HeidiSQL Versione:            12.6.0.6765
--- --------------------------------------------------------
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
