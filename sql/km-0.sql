@@ -265,8 +265,35 @@ CREATE TABLE `vwadmin` (
 DROP TABLE IF EXISTS `vwadmin`;
 CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vwadmin` AS select `tbcredential`.`idCredential` AS `idCredential`,`tbcredential`.`email` AS `email`,`tbcredential`.`pswd` AS `pswd`,`tbcredential`.`attivo` AS `attivo` from `tbcredential` where !(`tbcredential`.`idCredential` in ((select `tbvenditore`.`idCredential` from `tbvenditore`) union (select `tbcliente`.`idCredential` from `tbcliente`)));
 
+-- Dump della struttura di vista km-0.vwvenditore
+DROP VIEW IF EXISTS `vwvenditore`;
+-- Creazione di una tabella temporanea per risolvere gli errori di dipendenza della vista
+CREATE TABLE `vwvenditore` (
+	`idVenditore` INT(11) NOT NULL,
+	`sitoweb` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
+	`partitaIVA` INT(11) NOT NULL,
+	`ragioneSociale` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
+	`CF` VARCHAR(16) NOT NULL COLLATE 'latin1_swedish_ci',
+	`idCredential` INT(11) NOT NULL,
+	`email` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
+	`pswd` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
+	`attivo` TINYINT(1) NULL
+) ENGINE=MyISAM;
+
+-- Rimozione temporanea di tabella e creazione della struttura finale della vista
+DROP TABLE IF EXISTS `vwvenditore`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vwvenditore` AS select `tv`.`idVenditore` AS `idVenditore`,`tv`.`sitoweb` AS `sitoweb`,`tv`.`partitaIVA` AS `partitaIVA`,`tv`.`ragioneSociale` AS `ragioneSociale`,`tv`.`CF` AS `CF`,`tv`.`idCredential` AS `idCredential`,`tc`.`email` AS `email`,`tc`.`pswd` AS `pswd`,`tc`.`attivo` AS `attivo` from (`tbvenditore` `tv` join `tbcredential` `tc` on(`tv`.`idCredential` = `tc`.`idCredential`));
+
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
+
+
+
+
+
+
+
+
