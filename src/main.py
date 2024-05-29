@@ -40,8 +40,7 @@ def registrati(cur):
         cur.execute(f"INSERT INTO tbcredential (idCredential, email, pswd, attivo) VALUES (NULL, '{email}', '{pwd}', 1);")
         conn.commit()
         idC=cur.fetchone()[0]
-        cur.execute(f"INSERT INTO tbcliente (idCliente, citta, provincia, via, nome, cognome, CF, telefono, `idCredential) VALUES
-	(NULL, '{citta}', '{provincia}', '{via}', '{first_name}', '{last_name}', '{codice_fiscale}', '{telefono}', {idC});")
+        cur.execute(f"INSERT INTO tbcliente (idCliente, citta, provincia, via, nome, cognome, CF, telefono, `idCredential) VALUES (NULL, '{citta}', '{provincia}', '{via}', '{first_name}', '{last_name}', '{codice_fiscale}', '{telefono}', {idC});")
         print("Account registrato con successo.")
     else:
         ragione_sociale=input("Inserisci la ragione sociale: ")
@@ -74,7 +73,7 @@ while True:
 
     if scelta==1:
         accedi(cur)
+        break
     elif scelta==2:
         registrati(cur)
-    else:
-        print("Scelta non valida.")
+        break
