@@ -5,10 +5,7 @@ def accedi(cur):
     email=input("digita l'email: ")
     password=input("digita la password: ")
 
-    cur.execute(f"SELECT COUNT(idCredential), attivo
-    FROM tbcredential 
-    WHERE email='{email}' AND pswd='{password}'
-    GROUP BY attivo;")
+    cur.execute(f"SELECT COUNT(idCredential), attivo FROM tbcredential WHERE email='{email}' AND pswd='{password}' GROUP BY attivo;")
     row=cur.fetchone()
     if row[0]==1 & row[1]==1:
         print("sei stato autenticato correttamente!")
