@@ -16,13 +16,14 @@ except mariadb.Error as e:
 while True:
     email=input("digita l'email: ")
     password=input("digita la password: ")
-    
+
     cur=conn.cursor()
-    count_credential=cur.execute(f"SELECT COUNT(idCredential) FROM tbcredential WHERE email='{email}' AND pswd='{password}';")
-    if (count_credential==1):
-        print("sei stato autenticato correttamente!")
-        cur.close()
-        conn.close()
-        break
+    cur.execute(f"SELECT COUNT(idCredential) FROM tbcredential WHERE email='{email}' AND pswd='{password}';")
+    row=cur.fetchone()
+    if (row[0]==1):
+            print("sei stato autenticato correttamente!")
+            cur.close()
+            conn.close()
+            break
     else:
         print("\n")
