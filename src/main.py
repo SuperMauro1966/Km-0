@@ -1,7 +1,7 @@
 import sys
 import mariadb
 
-def accedi(cur):
+def accedi(cur, conn):
     email=input("digita l'email: ")
     password=input("digita la password: ")
 
@@ -16,12 +16,12 @@ def accedi(cur):
     else:
         print("\n")
 
-def registrati(cur):
+def registrati(cur, conn):
     # inserimento dati x tbcredential
     email=input("Inserisci l'e-mail: ")
     cur.execute(f"SELECT COUNT(idCredential) FROM tbcredential WHERE email='{email}';")
-    check_email=cur.fetchone()[0]
-    if check_email==1:
+    check_email=cur.fetchone()
+    if check_email[0]==1:
         print("è già stato creato un account con questa mail")
     else:
         pwd=input("Inserisci la password: ")
@@ -44,8 +44,8 @@ def registrati(cur):
             provincia=input("Inserisci la provincia: ")
             cur.execute(f"INSERT INTO tbcredential (idCredential, email, pswd, attivo) VALUES (NULL, '{email}', '{pwd}', 1);")
             conn.commit()
-            idC=cur.fetchone()[0]
-            cur.execute(f"INSERT INTO tbcliente (idCliente, citta, provincia, via, nome, cognome, CF, telefono, `idCredential) VALUES (NULL, '{citta}', '{provincia}', '{via}', '{first_name}', '{last_name}', '{codice_fiscale}', '{telefono}', {idC});")
+            idC=cur.fetchone()
+            cur.execute(f"INSERT INTO tbcliente (idCliente, citta, provincia, via, nome, cognome, CF, telefono, `idCredential) VALUES (NULL, '{citta}', '{provincia}', '{via}', '{first_name}', '{last_name}', '{codice_fiscale}', '{telefono}', {idC[0]});")
             conn.commit()
             print("Account registrato con successo.")
         else:
@@ -55,8 +55,8 @@ def registrati(cur):
             
             cur.execute(f"INSERT INTO tbcredential (idCredential, email, pswd, attivo) VALUES (NULL, '{email}', '{pwd}', 1);")
             conn.commit()
-            idC=cur.fetchone()[0]
-            cur.execute(f"INSERT INTO tbvenditore (idVenditore, sitoweb, partitaIVA, ragioneSociale, CF, telefono, idCredential) VALUES (NULL,'{sitoweb}', {partitaIVA}, '{ragione_sociale}', '{codice_fiscale}', '{telefono}', {idC});")
+            idC=cur.fetchone()
+            cur.execute(f"INSERT INTO tbvenditore (idVenditore, sitoweb, partitaIVA, ragioneSociale, CF, telefono, idCredential) VALUES (NULL,'{sitoweb}', {partitaIVA}, '{ragione_sociale}', '{codice_fiscale}', '{telefono}', {idC[0]});")
             conn.commit()
 
 
@@ -80,11 +80,11 @@ while True:
 
     print("\n")
     if scelta==1:
-        accedi(cur)
+        accedi(cur, conn)
         cur.close()
         conn.close()
     elif scelta==2:
-        registrati(cur)
+        registrati(cur, conn)
         cur.close()
         conn.close()
     else:
