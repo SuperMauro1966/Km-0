@@ -36,7 +36,7 @@ def registrati(cur):
         while ruolo!='C' and ruolo!='V' and ruolo!='c' and ruolo!='v':
             ruolo=input("\nInserisci il ruolo: \nV o v per venditore\nC o c per cliente\n")
             
-        if ruolo=='C':
+        if ruolo=='C' or ruolo=='c':
             first_name=input("\nInserisci il nome: ")
             last_name=input("Inserisci il cognome: ")
             via=input("Inserisci la via: ")    
