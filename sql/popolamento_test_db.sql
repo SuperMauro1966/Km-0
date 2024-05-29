@@ -1,5 +1,5 @@
 -- Dump dei dati della tabella km-0.tbcredential: ~7 rows (circa)
-DELETE FROM `tbcredential`;
+-- DELETE FROM `tbcredential`;
 INSERT INTO `tbcredential` (`idCredential`, `pswd`, `email`, `attivo`) VALUES
 	(3, '5678', 'Pippo', 1),
 	(4, '5678', 'Pluto', 1),
