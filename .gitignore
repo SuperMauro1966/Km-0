@@ -1,2 +1,4 @@
 # configurazione ambiente virtuale di python
 .venv/
+# file di backup di draw.io
+*.bkp
