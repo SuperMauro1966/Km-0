@@ -46,6 +46,7 @@ def registrati(cur):
             conn.commit()
             idC=cur.fetchone()[0]
             cur.execute(f"INSERT INTO tbcliente (idCliente, citta, provincia, via, nome, cognome, CF, telefono, `idCredential) VALUES (NULL, '{citta}', '{provincia}', '{via}', '{first_name}', '{last_name}', '{codice_fiscale}', '{telefono}', {idC});")
+            conn.commit()
             print("Account registrato con successo.")
         else:
             ragione_sociale=input("\nInserisci la ragione sociale: ")
@@ -56,7 +57,7 @@ def registrati(cur):
             conn.commit()
             idC=cur.fetchone()[0]
             cur.execute(f"INSERT INTO tbvenditore (idVenditore, sitoweb, partitaIVA, ragioneSociale, CF, telefono, idCredential) VALUES (NULL,'{sitoweb}', {partitaIVA}, '{ragione_sociale}', '{codice_fiscale}', '{telefono}', {idC});")
-
+            conn.commit()
 
 
 try:
