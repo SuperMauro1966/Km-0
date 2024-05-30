@@ -61,7 +61,7 @@ def registrati():
 
 def main():
     try:
-        globals()["conn"]=mariadb.connect(
+        conn=mariadb.connect(
             user="root",
             password="1234",
             host="127.0.0.1",
@@ -75,22 +75,6 @@ def main():
     #print(globals())
     while True:
         scelta=int(input("\nScegli un'opzione: \n1. per accedere\n2. per registrarsi\n3. per uscire\n"))
-def main():
-    try:
-        conn=mariadb.connect(
-            user="root",
-            password="1234",
-            host="127.0.0.1",
-            port=3306,
-            database="km-0"
-        )
-    except mariadb.Error as e:
-        print(f"Error connecting to MariaDB platform: {e}")
-        sys.exit(1)
-
-    print(globals())
-    while True:
-        scelta=int(input("Scegli un'opzione: \n1. per accedere\n2. per registrarsi\n3. per uscire\n"))
         while scelta<1 or scelta>3:
             scelta=int(input("\nScegli un'opzione: \n1. per accedere\n2. per registrarsi\n3. per uscire\n"))
 
@@ -139,6 +123,3 @@ if __name__ == "__main__":
         test()
     else:
         print("main run per eseguire il programma","main test per eseguire un test", sep=';')
-        
-
-
