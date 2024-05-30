@@ -14,7 +14,7 @@ from  controller import accedi,db
     cur.close()
     return row==1
     """
-def registrati(cur, conn):
+def registrati():
     # inserimento dati x tbcredential
     email=input("Inserisci l'e-mail: ")
     cur.execute(f"SELECT COUNT(idCredential) FROM tbcredential WHERE email='{email}';")
@@ -59,7 +59,22 @@ def registrati(cur, conn):
             cur.execute(f"INSERT INTO tbvenditore (idVenditore, sitoweb, partitaIVA, ragioneSociale, CF, telefono, idCredential) VALUES (NULL,'{sitoweb}', {partitaIVA}, '{ragione_sociale}', '{codice_fiscale}', '{telefono}', {idC[0]});")
             conn.commit()
 
+def main():
+    try:
+        globals()["conn"]=mariadb.connect(
+            user="root",
+            password="1234",
+            host="127.0.0.1",
+            port=3306,
+            database="km-0"
+        )
+    except mariadb.Error as e:
+        print(f"Error connecting to MariaDB platform: {e}")
+        sys.exit(1)
 
+    #print(globals())
+    while True:
+        scelta=int(input("\nScegli un'opzione: \n1. per accedere\n2. per registrarsi\n3. per uscire\n"))
 def main():
     try:
         conn=mariadb.connect(
@@ -83,14 +98,13 @@ def main():
         if scelta==1:
             email=input("digita l'email: ")
             password=input("digita la password: ")
-            if accedi(email,password):
-                print("Autenticato correttamente")
+            if accedi(email, password):
+                print("Autenticato correttamente!")
             else:
-                print("Errore nel login, l'utente potrebbe essere non autenticato o disattivato dall'admin")
+                print("Errore nel login, l'utente potrebbe non esistere o disattivato dall'admin")
         elif scelta==2:
-            registrati(cur, conn)
+            registrati()
         else:
-            cur.close()
             conn.close()
             break
 
