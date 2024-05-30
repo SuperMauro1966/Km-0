@@ -20,8 +20,8 @@ def registrati(cur, conn):
     # inserimento dati x tbcredential
     email=input("Inserisci l'e-mail: ")
     cur.execute(f"SELECT COUNT(idCredential) FROM tbcredential WHERE email='{email}';")
-    check_email=cur.fetchone()
-    if check_email[0]==1:
+    check_email=cur.fetchone()[0]
+    if check_email==1:
         print("è già stato creato un account con questa mail")
     else:
         pwd=input("Inserisci la password: ")
@@ -44,7 +44,8 @@ def registrati(cur, conn):
             provincia=input("Inserisci la provincia: ")
             cur.execute(f"INSERT INTO tbcredential (idCredential, email, pswd, attivo) VALUES (NULL, '{email}', '{pwd}', 1);")
             conn.commit()
-            idC=cur.fetchone()
+            cur.execute("SELECT idCredential FROM tbcredential;")
+            idC=cur.fetchone()[0]
             cur.execute(f"INSERT INTO tbcliente (idCliente, citta, provincia, via, nome, cognome, CF, telefono, `idCredential) VALUES (NULL, '{citta}', '{provincia}', '{via}', '{first_name}', '{last_name}', '{codice_fiscale}', '{telefono}', {idC[0]});")
             conn.commit()
             print("Account registrato con successo.")
@@ -55,7 +56,8 @@ def registrati(cur, conn):
             
             cur.execute(f"INSERT INTO tbcredential (idCredential, email, pswd, attivo) VALUES (NULL, '{email}', '{pwd}', 1);")
             conn.commit()
-            idC=cur.fetchone()
+            cur.execute("SELECT idCredential FROM tbcredential;")
+            idC=cur.fetchone()[0]
             cur.execute(f"INSERT INTO tbvenditore (idVenditore, sitoweb, partitaIVA, ragioneSociale, CF, telefono, idCredential) VALUES (NULL,'{sitoweb}', {partitaIVA}, '{ragione_sociale}', '{codice_fiscale}', '{telefono}', {idC[0]});")
             conn.commit()
 
