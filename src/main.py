@@ -58,35 +58,64 @@ def registrati():
             cur.execute(f"INSERT INTO tbvenditore (idVenditore, sitoweb, partitaIVA, ragioneSociale, CF, telefono, idCredential) VALUES (NULL,'{sitoweb}', {partitaIVA}, '{ragione_sociale}', '{codice_fiscale}', '{telefono}', {idC[0]});")
             conn.commit()
 
+def main():
+    try:
+        globals()["conn"]=mariadb.connect(
+            user="root",
+            password="1234",
+            host="127.0.0.1",
+            port=3306,
+            database="km-0"
+        )
+    except mariadb.Error as e:
+        print(f"Error connecting to MariaDB platform: {e}")
+        sys.exit(1)
 
-try:
-    conn=mariadb.connect(
-        user="root",
-        password="1234",
-        host="127.0.0.1",
-        port=3306,
-        database="km-0"
-    )
-except mariadb.Error as e:
-    print(f"Error connecting to MariaDB platform: {e}")
-    sys.exit(1)
-
-#print(globals())
-while True:
-    scelta=int(input("\nScegli un'opzione: \n1. per accedere\n2. per registrarsi\n3. per uscire\n"))
-    while scelta<1 or scelta>3:
+    #print(globals())
+    while True:
         scelta=int(input("\nScegli un'opzione: \n1. per accedere\n2. per registrarsi\n3. per uscire\n"))
+        while scelta<1 or scelta>3:
+            scelta=int(input("\nScegli un'opzione: \n1. per accedere\n2. per registrarsi\n3. per uscire\n"))
 
-    print("\n")
-    if scelta==1:
-        email=input("digita l'email: ")
-        password=input("digita la password: ")
-        if accedi(email, password):
-            print("Autenticato correttamente!")
+        print("\n")
+        if scelta==1:
+            email=input("digita l'email: ")
+            password=input("digita la password: ")
+            if accedi(email, password):
+                print("Autenticato correttamente!")
+            else:
+                print("Errore nel login, l'utente potrebbe non esistere o disattivato dall'admin")
+        elif scelta==2:
+            registrati()
         else:
-            print("Errore nel login, l'utente potrebbe non esistere o disattivato dall'admin")
-    elif scelta==2:
-        registrati()
+            conn.close()
+            break
+
+def test():
+    try:
+        conn=mariadb.connect(
+            user="root",
+            password="1234",
+            host="127.0.0.1",
+            port=3306,
+            database="km-0"
+        )
+    except mariadb.Error as e:
+        print(f"Error connecting to MariaDB platform: {e}")
+        sys.exit(1)
+
+    assert accedi("Gabriele", "1234")
+    assert accedi("Pluto2", "12")==False
+    assert accedi("d", "f")==False
+    assert accedi("Topolino", "11")==False
+    assert accedi("Sergio", "1234")
+    assert accedi("Pluto", "5678")
+
+if __name__ == "__main__":
+    cmd=sys.argv[1]
+    if cmd=="run":
+        main()
+    elif cmd=="test":
+        test()
     else:
-        conn.close()
-        break
+        print("main run per eseguire il programma","main test per eseguire i test", sep=';')
