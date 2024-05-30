@@ -1,3 +1,5 @@
+import sys
+import mariadb
 _conn = None
 
 def apri_connessione():
