@@ -15,11 +15,9 @@ INSERT INTO `tbcliente` (`idCliente`, `citta`, `provincia`, `via`, `nome`, `cogn
 
 -- Dump dei dati della tabella km-0.tbvenditore: ~2 rows (circa)
 DELETE FROM `tbvenditore`;
-INSERT INTO `tbvenditore` (`idVenditore`, `sitoweb`, `partitaIVA`, `ragioneSociale`, `CF`, `idCredential`) VALUES
-	(1, 'www.disney.it', 10, 'Topolino', 'BBB', 4),
-	(2, 'www.disney.it', 10, 'Topolino', 'BBB', 6);
-
-
+INSERT INTO `tbvenditore` (`idVenditore`, `sitoweb`, `partitaIVA`, `ragioneSociale`, `CF`, `idCredential`, telefono) VALUES
+	(1, 'www.disney.it', 10, 'Topolino', 'BBB', 4, '+39'),
+	(2, 'www.disney.it', 10, 'Topolino', 'BBB', 6, '+39');
 
 
 

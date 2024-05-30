@@ -80,7 +80,8 @@ CREATE TABLE IF NOT EXISTS `tbcredential` (
   `pswd` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `attivo` tinyint(1) DEFAULT 1,
-  PRIMARY KEY (`idCredential`)
+  PRIMARY KEY (`idCredential`),
+  UNIQUE KEY `idx_tbcredential_email_pswd` (`email`,`pswd`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Dump dei dati della tabella km-0.tbcredential: ~2 rows (circa)

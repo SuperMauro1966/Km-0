@@ -1,22 +1,19 @@
 import sys
 import mariadb
 
-def accedi(cur, conn):
-    email=input("digita l'email: ")
-    password=input("digita la password: ")
+def accedi(email, password):
+    """
+    ritorna True se l'utente è autorizzato ad accedere all'applicazione con le credenziali fornite
+    username (email): email
+    password: password
+    """
+    cur=conn.cursor()
+    cur.execute(f"SELECT COUNT(idCredential) FROM tbcredential WHERE email='{email}' AND pswd='{password}' AND attivo=1;")
+    row=cur.fetchone()[0]
+    cur.close()
+    return row==1
 
-    cur.execute(f"SELECT COUNT(idCredential), attivo FROM tbcredential WHERE email='{email}' AND pswd='{password}' GROUP BY attivo;")
-    row=cur.fetchone()
-    if row[0]==1 and row[1]==1:
-        print("sei stato autenticato correttamente!")
-    elif row[0]==0:
-        print("probabilmente non è ancora registrato, prema 2 nella sezione successiva")
-    elif row[1]==0:
-        print("account disattivato, per riattivarlo contattare l'amministratore di sistema")
-    else:
-        print("\n")
-
-def registrati(cur, conn):
+def registrati():
     # inserimento dati x tbcredential
     email=input("Inserisci l'e-mail: ")
     cur.execute(f"SELECT COUNT(idCredential) FROM tbcredential WHERE email='{email}';")
@@ -44,7 +41,7 @@ def registrati(cur, conn):
             provincia=input("Inserisci la provincia: ")
             cur.execute(f"INSERT INTO tbcredential (idCredential, email, pswd, attivo) VALUES (NULL, '{email}', '{pwd}', 1);")
             conn.commit()
-            cur.execute("SELECT idCredential FROM tbcredential;")
+            cur.execute("SELECT idCredential FROM tbcredential WHERE email='{email}';")
             idC=cur.fetchone()[0]
             cur.execute(f"INSERT INTO tbcliente (idCliente, citta, provincia, via, nome, cognome, CF, telefono, `idCredential) VALUES (NULL, '{citta}', '{provincia}', '{via}', '{first_name}', '{last_name}', '{codice_fiscale}', '{telefono}', {idC[0]});")
             conn.commit()
@@ -56,7 +53,7 @@ def registrati(cur, conn):
             
             cur.execute(f"INSERT INTO tbcredential (idCredential, email, pswd, attivo) VALUES (NULL, '{email}', '{pwd}', 1);")
             conn.commit()
-            cur.execute("SELECT idCredential FROM tbcredential;")
+            cur.execute("SELECT idCredential FROM tbcredential WHERE email='{email}';")
             idC=cur.fetchone()[0]
             cur.execute(f"INSERT INTO tbvenditore (idVenditore, sitoweb, partitaIVA, ragioneSociale, CF, telefono, idCredential) VALUES (NULL,'{sitoweb}', {partitaIVA}, '{ragione_sociale}', '{codice_fiscale}', '{telefono}', {idC[0]});")
             conn.commit()
@@ -74,20 +71,22 @@ except mariadb.Error as e:
     print(f"Error connecting to MariaDB platform: {e}")
     sys.exit(1)
 
-cur=conn.cursor()
+#print(globals())
 while True:
-    scelta=int(input("Scegli un'opzione: \n1. per accedere\n2. per registrarsi\n3. per uscire\n"))
+    scelta=int(input("\nScegli un'opzione: \n1. per accedere\n2. per registrarsi\n3. per uscire\n"))
     while scelta<1 or scelta>3:
         scelta=int(input("\nScegli un'opzione: \n1. per accedere\n2. per registrarsi\n3. per uscire\n"))
 
     print("\n")
     if scelta==1:
-        accedi(cur, conn)
-        cur.close()
-        conn.close()
+        email=input("digita l'email: ")
+        password=input("digita la password: ")
+        if accedi(email, password):
+            print("Autenticato correttamente!")
+        else:
+            print("Errore nel login, l'utente potrebbe non esistere o disattivato dall'admin")
     elif scelta==2:
-        registrati(cur, conn)
-        cur.close()
-        conn.close()
+        registrati()
     else:
+        conn.close()
         break
