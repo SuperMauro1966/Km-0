@@ -1,18 +1,19 @@
 import sys
 import mariadb
+from  controller import accedi,db
 
-def accedi(email, password):
-    """
+"""def accedi(email, password):
+    
     ritorna True se l'utente è autorizzato ad accedere all'applicazione con le credenziali fornite
     username (email): email
     password: password
-    """
+    
     cur=conn.cursor()
     cur.execute(f"SELECT COUNT(idCredential) FROM tbcredential WHERE email='{email}' AND pswd='{password}' AND attivo=1;")
     row=cur.fetchone()[0]
     cur.close()
     return row==1
-
+    """
 def registrati():
     # inserimento dati x tbcredential
     email=input("Inserisci l'e-mail: ")
@@ -41,7 +42,7 @@ def registrati():
             provincia=input("Inserisci la provincia: ")
             cur.execute(f"INSERT INTO tbcredential (idCredential, email, pswd, attivo) VALUES (NULL, '{email}', '{pwd}', 1);")
             conn.commit()
-            cur.execute("SELECT idCredential FROM tbcredential WHERE email='{email}';")
+            cur.execute("SELECT idCredential FROM tbcredential;")
             idC=cur.fetchone()[0]
             cur.execute(f"INSERT INTO tbcliente (idCliente, citta, provincia, via, nome, cognome, CF, telefono, `idCredential) VALUES (NULL, '{citta}', '{provincia}', '{via}', '{first_name}', '{last_name}', '{codice_fiscale}', '{telefono}', {idC[0]});")
             conn.commit()
@@ -53,7 +54,7 @@ def registrati():
             
             cur.execute(f"INSERT INTO tbcredential (idCredential, email, pswd, attivo) VALUES (NULL, '{email}', '{pwd}', 1);")
             conn.commit()
-            cur.execute("SELECT idCredential FROM tbcredential WHERE email='{email}';")
+            cur.execute("SELECT idCredential FROM tbcredential;")
             idC=cur.fetchone()[0]
             cur.execute(f"INSERT INTO tbvenditore (idVenditore, sitoweb, partitaIVA, ragioneSociale, CF, telefono, idCredential) VALUES (NULL,'{sitoweb}', {partitaIVA}, '{ragione_sociale}', '{codice_fiscale}', '{telefono}', {idC[0]});")
             conn.commit()
@@ -74,6 +75,22 @@ def main():
     #print(globals())
     while True:
         scelta=int(input("\nScegli un'opzione: \n1. per accedere\n2. per registrarsi\n3. per uscire\n"))
+def main():
+    try:
+        conn=mariadb.connect(
+            user="root",
+            password="1234",
+            host="127.0.0.1",
+            port=3306,
+            database="km-0"
+        )
+    except mariadb.Error as e:
+        print(f"Error connecting to MariaDB platform: {e}")
+        sys.exit(1)
+
+    print(globals())
+    while True:
+        scelta=int(input("Scegli un'opzione: \n1. per accedere\n2. per registrarsi\n3. per uscire\n"))
         while scelta<1 or scelta>3:
             scelta=int(input("\nScegli un'opzione: \n1. per accedere\n2. per registrarsi\n3. per uscire\n"))
 
@@ -93,23 +110,26 @@ def main():
 
 def test():
     try:
-        conn=mariadb.connect(
-            user="root",
-            password="1234",
-            host="127.0.0.1",
-            port=3306,
-            database="km-0"
-        )
+        globals()["conn"] = \
+            mariadb.connect(
+                user="root",
+                password="1234",
+                host="127.0.0.1",
+                port=3306,
+                database="km-0"
+            )
     except mariadb.Error as e:
         print(f"Error connecting to MariaDB platform: {e}")
         sys.exit(1)
+    
+    assert accedi("Gabriele","1234") 
+    assert accedi("Pluto2","12") ==False
+    assert accedi("Pippo","5678")   
+    assert accedi("Paperino","10")==False  
+    assert accedi("Pluto","5678")  
+    assert accedi("Topolino","11")==False
+    assert accedi("Plto2","2")==False
 
-    assert accedi("Gabriele", "1234")
-    assert accedi("Pluto2", "12")==False
-    assert accedi("d", "f")==False
-    assert accedi("Topolino", "11")==False
-    assert accedi("Sergio", "1234")
-    assert accedi("Pluto", "5678")
 
 if __name__ == "__main__":
     cmd=sys.argv[1]
@@ -118,4 +138,7 @@ if __name__ == "__main__":
     elif cmd=="test":
         test()
     else:
-        print("main run per eseguire il programma","main test per eseguire i test", sep=';')
+        print("main run per eseguire il programma","main test per eseguire un test", sep=';')
+        
+
+
