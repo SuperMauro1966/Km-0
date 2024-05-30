@@ -1,5 +1,4 @@
 import sys
-import mariadb
 from  controller import accedi,db
 
 """def accedi(email, password):
@@ -60,17 +59,7 @@ def registrati():
             conn.commit()
 
 def main():
-    try:
-        conn=mariadb.connect(
-            user="root",
-            password="1234",
-            host="127.0.0.1",
-            port=3306,
-            database="km-0"
-        )
-    except mariadb.Error as e:
-        print(f"Error connecting to MariaDB platform: {e}")
-        sys.exit(1)
+    db.apri_connessione()
 
     #print(globals())
     while True:
@@ -82,7 +71,7 @@ def main():
         if scelta==1:
             email=input("digita l'email: ")
             password=input("digita la password: ")
-            if accedi(email, password):
+            if accedi.accedi(email, password):
                 print("Autenticato correttamente!")
             else:
                 print("Errore nel login, l'utente potrebbe non esistere o disattivato dall'admin")
@@ -93,26 +82,14 @@ def main():
             break
 
 def test():
-    try:
-        globals()["conn"] = \
-            mariadb.connect(
-                user="root",
-                password="1234",
-                host="127.0.0.1",
-                port=3306,
-                database="km-0"
-            )
-    except mariadb.Error as e:
-        print(f"Error connecting to MariaDB platform: {e}")
-        sys.exit(1)
-    
-    assert accedi("Gabriele","1234") 
-    assert accedi("Pluto2","12") ==False
-    assert accedi("Pippo","5678")   
-    assert accedi("Paperino","10")==False  
-    assert accedi("Pluto","5678")  
-    assert accedi("Topolino","11")==False
-    assert accedi("Plto2","2")==False
+    db.apri_connessione()
+    assert accedi.accedi("Gabriele","1234") 
+    assert accedi.accedi("Pluto2","12") ==False
+    assert accedi.accedi("Pippo","5678")   
+    assert accedi.accedi("Paperino","10")==False  
+    assert accedi.accedi("Pluto","5678")  
+    assert accedi.accedi("Topolino","11")==False
+    assert accedi.accedi("Plto2","2")==False
 
 
 if __name__ == "__main__":
