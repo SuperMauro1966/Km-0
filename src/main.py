@@ -21,6 +21,7 @@ def check_email(email):
     return ch_mail==0
 
 def registrati(email, password, codice_fiscale, telefono, ruolo):
+    conn = db.ritorna_connessione()
     # inserimento dati x tbcredential
     while ruolo != 'C' and ruolo != 'V' and ruolo != 'c' and ruolo != 'v':
         ruolo=input("\nInserisci il ruolo: \nV o v per venditore\nC o c per cliente\n")
