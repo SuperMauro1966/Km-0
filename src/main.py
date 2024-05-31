@@ -1,18 +1,6 @@
 import sys
-from  controller import accedi,db
+from  controller import db, login
 
-"""def accedi(email, password):
-    
-    ritorna True se l'utente è autorizzato ad accedere all'applicazione con le credenziali fornite
-    username (email): email
-    password: password
-    
-    cur=conn.cursor()
-    cur.execute(f"SELECT COUNT(idCredential) FROM tbcredential WHERE email='{email}' AND pswd='{password}' AND attivo=1;")
-    row=cur.fetchone()[0]
-    cur.close()
-    return row==1
-    """
 def check_email(email):
     """
     ritorna True se l'utente ha inserito una mail già usata per l'autenticazione
@@ -86,7 +74,6 @@ def registrati(email, password, codice_fiscale, telefono, ruolo):
 
 def main():
     db.apri_connessione()
-
     #print(globals())
     while True:
         scelta = int(input("\nScegli un'opzione:\n1. per accedere\n2. per registrarsi\n3. per uscire\n"))
@@ -97,7 +84,7 @@ def main():
         if scelta == 1:
             email = input("Digita l'email: ")
             password = input("Digita la password: ")
-            if accedi(email, password):
+            if login.accedi(email, password):
                 print("Autenticato correttamente!")
             else:
                 print("Errore nel login, l'utente potrebbe non esistere o disattivato dall'admin")
@@ -119,18 +106,19 @@ def main():
             ruolo = input("Inserisci il ruolo: \nV o v per venditore\nC o c per cliente\n")
             registrati(email, password, codice_fiscale, telefono, ruolo)
         else:
-            conn.close()
+            db.chiudi_connessione()
             break
 
 def test():
     db.apri_connessione()
-    assert accedi.accedi("Gabriele","1234") 
-    assert accedi.accedi("Pluto2","12") == False
-    assert accedi.accedi("Pippo","5678")   
-    assert accedi.accedi("Paperino","10") == False  
-    assert accedi.accedi("Pluto","5678")  
-    assert accedi.accedi("Topolino","11") == False
-    assert accedi.accedi("Plto2","2") == False
+    assert login.accedi("Gabriele","1234") 
+    assert login.accedi("Pluto2","12") == False
+    assert login.accedi("Pippo","5678")   
+    assert login.accedi("Paperino","10") == False  
+    assert login.accedi("Pluto","5678")  
+    assert login.accedi("Topolino","11") == False
+    assert login.accedi("Plto2","2") == False
+    db.chiudi_connessione()
 
 
 if __name__ == "__main__":
