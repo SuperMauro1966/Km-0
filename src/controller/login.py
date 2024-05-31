@@ -11,4 +11,4 @@ def accedi(email, password):
     cur.execute(f"SELECT COUNT(idCredential) FROM tbcredential WHERE email='{email}' AND pswd='{password}' AND attivo=1;")
     row = cur.fetchone()[0]
     cur.close()
-    return row==1
+    return row == 1
