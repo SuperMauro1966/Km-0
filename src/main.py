@@ -92,19 +92,32 @@ def main():
             reg_param = {}
             reg_param['email'] = input("Digita l'email: ")
             status, msg = registrazione.registrati(reg_param)
-            print(msg)
+            if status:
+                print(msg)
+            else:
+                #inserimento dei campi in comune
+                reg_param['password'] = input("Inserisci la password: ")
+                reg_param['confirm_pwd'] = input("Inserisci nuovamente la password: ")
+                while reg_param['password'] != reg_param['confirm_pwd']:
+                    print("Le password non corrispondono")
+                    reg_param['confirm_pwd'] = input("Inserisci nuovamente la password: ")
+                reg_param['codice_fiscale'] = input("Inserisci il codice fiscale: ")
+                reg_param['telefono'] = input("Inserisci il numero di telefono: ")
+                reg_param['ruolo'] = input("Inserisci il ruolo:\nV o v per venditore\nC o c per cliente\n")
+                while reg_param['ruolo'].upper != 'C' and reg_param['ruolo'].upper != 'V':
+                    reg_param['ruolo'] = input("Inserisci il ruolo:\nV o v per venditore\nC o c per cliente\n")
+                if reg_param['ruolo'].upper == 'C':
+                    reg_param['nome'] = input("\nInserisci il nome: ")
+                    reg_param['cognome'] = input("Inserisci il cognome: ")
+                    reg_param['via'] = input("Inserisci la via: ")    
+                    reg_param['citta'] = input("Inserisci la città: ")
+                    reg_param['provincia'] = input("Inserisci la provincia: ")
+                else:
+                    reg_param['ragione_sociale'] = input("\nInserisci la ragione sociale: ")
+                    reg_param['sitoweb'] = input("Inserisci un eventuale sito web: ")
+                    reg_param['partitaIVA'] = int(input("Inserisci la partita IVA: "))
 
-            #inserimento dei campi in comune
-            """password = input("Inserisci la password: ")
-            confirm_pwd = input("Inserisci nuovamente la password: ")
-            while password != confirm_pwd:
-                print("Le password non corrispondono")
-                confirm_pwd = input("Inserisci nuovamente la password: ")
-            codice_fiscale = input("Inserisci il codice fiscale: ")
-            telefono = input("Inserisci il numero di telefono: ")
-            
-            ruolo = input("Inserisci il ruolo:\nV o v per venditore\nC o c per cliente\n")
-            registrati(email, password, codice_fiscale, telefono, ruolo)"""
+                registrazione.registrati(reg_param)
         else:
             db.chiudi_connessione()
             break

@@ -13,7 +13,9 @@ def _check_email(email: str) -> bool:
 
     return ch_mail == 1
 
-def registrati(dati_registrazione: dict):
+def registrati(dati_registrazione: dict) -> tuple[bool, str]:
+
+
     """
     registra l'utente all'interno del database differenziandolo tra cliente e venditore
     email: email
@@ -32,21 +34,23 @@ def registrati(dati_registrazione: dict):
     """
     if _check_email(dati_registrazione['email']):
         return False, "Utente già registrato"
-    return True, "Registrazione completata con successo!"
 
-    """while ruolo != 'C' and ruolo != 'V' and ruolo != 'c' and ruolo != 'v':
+    while ruolo != 'C' and ruolo != 'V' and ruolo != 'c' and ruolo != 'v':
         ruolo=input("\nInserisci il ruolo:\nV o v per venditore\nC o c per cliente\n")
 
-    if ruolo == 'C' or ruolo == 'c':
+    if ruolo.upper == 'C' :
+
+        """
         first_name = input("\nInserisci il nome: ")
         last_name = input("Inserisci il cognome: ")
         via = input("Inserisci la via: ")    
         citta = input("Inserisci la città: ")
         provincia = input("Inserisci la provincia: ")
+        """
 
         conn = db.ritorna_connessione()
         cur = conn.cursor()
-        cur.execute(f"INSERT INTO tbcredential (idCredential, email, pswd, attivo) VALUES (NULL, '{email}', '{password}', 1);")
+        cur.execute(f"INSERT INTO tbcredential (idCredential, email, pswd, attivo) VALUES (NULL, '{dati_registrazione['email']}', '{dati_registrazione[p]}', 1);")
         conn.commit()
         cur.close()
 
@@ -61,10 +65,11 @@ def registrati(dati_registrazione: dict):
         cur.close()
         print("Account registrato con successo.")
     else:
+        """
         ragione_sociale = input("\nInserisci la ragione sociale: ")
         sitoweb = input("Inserisci un eventuale sito web: ")
         partitaIVA = int(input("Inserisci la partita IVA: "))
-                
+        """
         conn = db.ritorna_connessione()
         cur = conn.cursor()
         cur.execute(f"INSERT INTO tbcredential (idCredential, email, pswd, attivo) VALUES (NULL, '{email}', '{password}', 1);")
@@ -75,4 +80,8 @@ def registrati(dati_registrazione: dict):
         cur.execute("SELECT idCredential FROM tbcredential WHERE email='{email}';")
         idC = cur.fetchone()[0]
         cur.execute(f"INSERT INTO tbvenditore (idVenditore, sitoweb, partitaIVA, ragioneSociale, CF, telefono, idCredential) VALUES (NULL,'{sitoweb}', {partitaIVA}, '{ragione_sociale}', '{codice_fiscale}', '{telefono}', {idC[0]});")
-        conn.commit()"""
+        conn.commit()
+
+    return True, "Registrazione completata con successo!"
+
+    
