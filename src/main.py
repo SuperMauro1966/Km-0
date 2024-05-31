@@ -1,5 +1,5 @@
 import sys
-from  controller import db, login
+from  controller import db, login, registrazione
 
 def check_email(email):
     """
@@ -89,13 +89,13 @@ def main():
             else:
                 print("Errore nel login, l'utente potrebbe non esistere o disattivato dall'admin")
         elif scelta == 2:
-            email = input("Digita l'email: ")
-            if check_email(email):
-                print("Errore! Email già utilizzata")
-                break
+            reg_param = {}
+            reg_param['email'] = input("Digita l'email: ")
+            status, msg = registrazione.registrati(reg_param)
+            print(msg)
 
             #inserimento dei campi in comune
-            password = input("Inserisci la password: ")
+            """password = input("Inserisci la password: ")
             confirm_pwd = input("Inserisci nuovamente la password: ")
             while password != confirm_pwd:
                 print("Le password non corrispondono")
@@ -103,21 +103,28 @@ def main():
             codice_fiscale = input("Inserisci il codice fiscale: ")
             telefono = input("Inserisci il numero di telefono: ")
             
-            ruolo = input("Inserisci il ruolo: \nV o v per venditore\nC o c per cliente\n")
-            registrati(email, password, codice_fiscale, telefono, ruolo)
+            ruolo = input("Inserisci il ruolo:\nV o v per venditore\nC o c per cliente\n")
+            registrati(email, password, codice_fiscale, telefono, ruolo)"""
         else:
             db.chiudi_connessione()
             break
 
 def test():
     db.apri_connessione()
-    assert login.accedi("Gabriele","1234") 
-    assert login.accedi("Pluto2","12") == False
-    assert login.accedi("Pippo","5678")   
-    assert login.accedi("Paperino","10") == False  
-    assert login.accedi("Pluto","5678")  
-    assert login.accedi("Topolino","11") == False
-    assert login.accedi("Plto2","2") == False
+    def test_accedi():
+        assert login.accedi("Gabriele", "1234") 
+        assert login.accedi("Pluto2", "12") == False
+        assert login.accedi("Pippo", "5678")   
+        assert login.accedi("Paperino", "10") == False  
+        assert login.accedi("Pluto", "5678")  
+        assert login.accedi("Topolino", "11") == False
+        assert login.accedi("Plto2", "2") == False
+    def test_registrati():
+        assert registrazione.registrati({'email': "Sergio"})[0] == False
+        assert registrazione.registrati({'email': "ciao"})[0]
+
+    test_accedi()
+    test_registrati() 
     db.chiudi_connessione()
 
 
