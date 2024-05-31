@@ -2,3 +2,5 @@
 .venv/
 # file di backup di draw.io
 *.bkp
+#file compilati da python
+*.pyc
