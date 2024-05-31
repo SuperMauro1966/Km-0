@@ -14,15 +14,35 @@ from  controller import accedi,db
     return row==1
     """
 def check_email(email):
-    cur=conn.cursor()
+    """
+    ritorna True se l'utente ha inserito una mail già usata per l'autenticazione
+    email: email
+    """
+    conn = db.ritorna_connessione()
+    cur = conn.cursor()
     cur.execute(f"SELECT COUNT(idCredential) FROM tbcredential WHERE email='{email}'")
     ch_mail = cur.fetchone()[0]
     cur.close()
     return ch_mail==0
 
 def registrati(email, password, codice_fiscale, telefono, ruolo):
+    """
+    registra l'utente all'interno del database differenziandolo tra cliente e venditore
+    email: email
+    password: password
+    codice_fiscale: codice fiscale
+    telefono: numero di telefono
+    ruolo: indicare se si è clienti o venditori
+    citta: città di residenza
+    provincia: provincia di residenza
+    via: via di residenza
+    first_name: nome
+    last_name: cognome
+    ragione_sociale: ragione sociale
+    sitoweb: sito web del venditore
+    partitaIVA: partita IVA
+    """
     conn = db.ritorna_connessione()
-    # inserimento dati x tbcredential
     while ruolo != 'C' and ruolo != 'V' and ruolo != 'c' and ruolo != 'v':
         ruolo=input("\nInserisci il ruolo: \nV o v per venditore\nC o c per cliente\n")
 
