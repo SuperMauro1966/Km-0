@@ -14,6 +14,23 @@ def _check_email(email: str) -> bool:
     return ch_mail == 1
 
 def _inputRegistrazione() -> dict:
+    """
+    permette all'utente di inserire i campi per registrarsi, differenziandolo tra cliente e venditore, in caso di inserimento di una mail già usata comparirà un messaggio di errore
+    email: email
+    password: password
+    codice_fiscale: codice fiscale
+    telefono: numero di telefono
+    ruolo: indicare se si è clienti o venditori
+    citta: città di residenza
+    provincia: provincia di residenza
+    via: via di residenza
+    first_name: nome
+    last_name: cognome
+    ragione_sociale: ragione sociale
+    sitoweb: sito web del venditore
+    partitaIVA: partita IVA
+    """
+    
     reg_param = {}
     reg_param['email'] = input("Digita l'email: ")
 
