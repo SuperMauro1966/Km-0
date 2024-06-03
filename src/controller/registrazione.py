@@ -86,8 +86,7 @@ def registrati() -> tuple[bool, str]:
         conn = db.ritorna_connessione()
         cur = conn.cursor()
         conn.begin()
-        #cur.execute(f"INSERT INTO tbcredential (idCredential, email, pswd) VALUES (NULL, '{dati_registrazione['email']}', '{dati_registrazione['password']}');")
-
+        
         if dati_registrazione['ruolo'].upper() == 'C':
             cur.execute(f"""INSERT INTO vwcliente (citta, provincia, via, nome, cognome, CF, telefono, email, pswd) 
                         VALUES ( 
