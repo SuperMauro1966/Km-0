@@ -45,7 +45,7 @@ def _inputRegistrazione() -> dict:
 
         reg_param['ruolo'] = input("Inserisci il ruolo:\nV o v per venditore\nC o c per cliente\n")
         # while reg_param['ruolo'].upper != 'C' and reg_param['ruolo'].upper != 'V':
-        while reg_param['ruolo'].upper() not in ['C','V'] :
+        while reg_param['ruolo'].upper() not in ['C', 'V'] :
             reg_param['ruolo'] = input("Inserisci il ruolo:\nV o v per venditore\nC o c per cliente\n")
 
         if reg_param['ruolo'].upper() == 'C':
@@ -86,14 +86,10 @@ def registrati() -> tuple[bool, str]:
         conn = db.ritorna_connessione()
         cur = conn.cursor()
         conn.begin()
-        cur.execute(f"INSERT INTO tbcredential (idCredential, email, pswd) VALUES (NULL, '{dati_registrazione['email']}', '{dati_registrazione['password']}');")
-
-        cur.execute(f"SELECT idCredential FROM tbcredential WHERE email='{dati_registrazione['email']}';")
-        idC = cur.fetchone()[0]
+        #cur.execute(f"INSERT INTO tbcredential (idCredential, email, pswd) VALUES (NULL, '{dati_registrazione['email']}', '{dati_registrazione['password']}');")
 
         if dati_registrazione['ruolo'].upper() == 'C':
-
-            cur.execute(f"""INSERT INTO tbcliente (citta, provincia, via, nome, cognome, CF, telefono, idCredential) 
+            cur.execute(f"""INSERT INTO vwcliente (citta, provincia, via, nome, cognome, CF, telefono, email, pswd) 
                         VALUES ( 
                         '{dati_registrazione['citta']}', 
                         '{dati_registrazione['provincia']}', 
@@ -102,17 +98,18 @@ def registrati() -> tuple[bool, str]:
                         '{dati_registrazione['cognome']}', 
                         '{dati_registrazione['codice_fiscale']}', 
                         '{dati_registrazione['telefono']}', 
-                         {idC});""")
-
+                        '{dati_registrazione['email']}'
+                        '{dati_registrazione['password']}');""")
         else:
-            cur.execute(f"""INSERT INTO tbvenditore (sitoweb, partitaIVA, ragioneSociale, CF, telefono, idCredential) 
+            cur.execute(f"""INSERT INTO vwvenditore (sitoweb, partitaIVA, ragioneSociale, CF, telefono, email, pswd) 
                         VALUES (
                         '{dati_registrazione['sitoweb']}', 
                          {dati_registrazione['partitaIVA']}, 
                         '{dati_registrazione['ragione_sociale']}', 
                         '{dati_registrazione['codice_fiscale']}', 
                         '{dati_registrazione['telefono']}', 
-                         {idC});""")
+                        '{dati_registrazione['email']}'
+                        '{dati_registrazione['password']}');""")
             
 
         conn.commit()
