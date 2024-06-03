@@ -30,35 +30,29 @@ def _inputRegistrazione() -> dict:
     sitoweb: sito web del venditore
     partitaIVA: partita IVA
     """
-    
+
+    param = ['email', 'password', 'codice_fiscale', 'telefono', 'ruolo']
     reg_param = {}
-    reg_param['email'] = input("Digita l'email: ")
+    for label in param:
+        reg_param[label] = input(f"Inserire campo {label}: ")
+        if _check_email(reg_param['email']):
+            return reg_param
+        if label == 'password':
+            conf_psw = input ("Conferma password: ")
+            if conf_psw != reg_param['password']:
+                reg_param['password'] = input(f"Inserire il campo password: ")
 
-    if not _check_email(reg_param['email']):
-        reg_param['password'] = input("Inserisci la password: ")
-        reg_param['confirm_pwd'] = input("Inserisci nuovamente la password: ")
-        while reg_param['password'] != reg_param['confirm_pwd']:
-            print("Le password non corrispondono")
-            reg_param['confirm_pwd'] = input("Inserisci nuovamente la password: ")
-        reg_param['codice_fiscale'] = input("Inserisci il codice fiscale: ")
-        reg_param['telefono'] = input("Inserisci il numero di telefono: ")
-
-        reg_param['ruolo'] = input("Inserisci il ruolo:\nV o v per venditore\nC o c per cliente\n")
-        # while reg_param['ruolo'].upper != 'C' and reg_param['ruolo'].upper != 'V':
         while reg_param['ruolo'].upper() not in ['C', 'V'] :
             reg_param['ruolo'] = input("Inserisci il ruolo:\nV o v per venditore\nC o c per cliente\n")
 
-        if reg_param['ruolo'].upper() == 'C':
-            reg_param['nome'] = input("\nInserisci il nome: ")
-            reg_param['cognome'] = input("Inserisci il cognome: ")
-            reg_param['via'] = input("Inserisci la via: ")    
-            reg_param['citta'] = input("Inserisci la città: ")
-            reg_param['provincia'] = input("Inserisci la provincia: ")
-        else:
-            reg_param['ragione_sociale'] = input("\nInserisci la ragione sociale: ")
-            reg_param['sitoweb'] = input("Inserisci un eventuale sito web: ")
-            reg_param['partitaIVA'] = int(input("Inserisci la partita IVA: "))
-
+    if reg_param['ruolo'].upper() == 'C':
+        client_param = ['nome', 'cognome', 'citta', 'provincia', 'via']
+        for label in client_param:
+            reg_param[label] = input(f"Inserire il campo {label}: ")
+    else:
+        seller_param = ['ragione_sociale', 'sitoweb', 'partitaIVA']
+        for label in seller_param:
+            reg_param[label] = input(f"Inserire il campo {label}: ")
     return reg_param
 
 def registrati() -> tuple[bool, str]:
@@ -86,7 +80,6 @@ def registrati() -> tuple[bool, str]:
         conn = db.ritorna_connessione()
         cur = conn.cursor()
         conn.begin()
-        #cur.execute(f"INSERT INTO tbcredential (idCredential, email, pswd) VALUES (NULL, '{dati_registrazione['email']}', '{dati_registrazione['password']}');")
 
         if dati_registrazione['ruolo'].upper() == 'C':
             cur.execute(f"""INSERT INTO vwcliente (citta, provincia, via, nome, cognome, CF, telefono, email, pswd) 
@@ -110,9 +103,9 @@ def registrati() -> tuple[bool, str]:
                         '{dati_registrazione['telefono']}', 
                         '{dati_registrazione['email']}'
                         '{dati_registrazione['password']}');""")
-            
+
 
         conn.commit()
         cur.close()    
-    
+
         return True, "Registrazione completata con successo!"
