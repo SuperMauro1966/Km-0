@@ -1,5 +1,5 @@
 -- Dump dei dati della tabella km-0.tbcredential: ~7 rows (circa)
-DELETE FROM `tbcredential`;
+-- DELETE FROM `tbcredential`;
 INSERT INTO `tbcredential` (`idCredential`, `pswd`, `email`, `attivo`) VALUES
 	(3, '5678', 'Pippo', 1),
 	(4, '5678', 'Pluto', 1),
@@ -15,11 +15,9 @@ INSERT INTO `tbcliente` (`idCliente`, `citta`, `provincia`, `via`, `nome`, `cogn
 
 -- Dump dei dati della tabella km-0.tbvenditore: ~2 rows (circa)
 DELETE FROM `tbvenditore`;
-INSERT INTO `tbvenditore` (`idVenditore`, `sitoweb`, `partitaIVA`, `ragioneSociale`, `CF`, `idCredential`) VALUES
-	(1, 'www.disney.it', 10, 'Topolino', 'BBB', 4),
-	(2, 'www.disney.it', 10, 'Topolino', 'BBB', 6);
-
-
+INSERT INTO `tbvenditore` (`idVenditore`, `sitoweb`, `partitaIVA`, `ragioneSociale`, `CF`, `idCredential`, telefono) VALUES
+	(1, 'www.disney.it', 10, 'Topolino', 'BBB', 4, '+39'),
+	(2, 'www.disney.it', 10, 'Topolino', 'BBB', 6, '+39');
 
 
 

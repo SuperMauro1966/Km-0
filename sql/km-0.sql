@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `tbcliente` (
   CONSTRAINT `FK_tbcliente_idCredential_tbcredential_idCredential` FOREIGN KEY (`idCredential`) REFERENCES `tbcredential` (`idCredential`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dump dei dati della tabella km-0.tbcliente: ~2 rows (circa)
+-- Dump dei dati della tabella km-0.tbcliente: ~0 rows (circa)
 DELETE FROM `tbcliente`;
 
 -- Dump della struttura di tabella km-0.tbcontiene
@@ -78,12 +78,13 @@ DROP TABLE IF EXISTS `tbcredential`;
 CREATE TABLE IF NOT EXISTS `tbcredential` (
   `idCredential` int(11) NOT NULL AUTO_INCREMENT,
   `pswd` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL DEFAULT '',
+  `email` varchar(255) NOT NULL,
   `attivo` tinyint(1) DEFAULT 1,
-  PRIMARY KEY (`idCredential`)
+  PRIMARY KEY (`idCredential`),
+  UNIQUE KEY `idx_tbcredential_email_pswd` (`email`,`pswd`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dump dei dati della tabella km-0.tbcredential: ~7 rows (circa)
+-- Dump dei dati della tabella km-0.tbcredential: ~2 rows (circa)
 DELETE FROM `tbcredential`;
 INSERT INTO `tbcredential` (`idCredential`, `pswd`, `email`, `attivo`) VALUES
 	(1, '1234', 'Sergio', 1),
@@ -242,13 +243,14 @@ CREATE TABLE IF NOT EXISTS `tbvenditore` (
   `partitaIVA` int(11) NOT NULL,
   `ragioneSociale` varchar(255) NOT NULL,
   `CF` varchar(16) NOT NULL,
+  `telefono` varchar(14) NOT NULL,
   `idCredential` int(11) NOT NULL,
   PRIMARY KEY (`idVenditore`),
   KEY `codCredential` (`idCredential`) USING BTREE,
   CONSTRAINT `FK_tbvenditore_idCredential_tbcredential_idCredential` FOREIGN KEY (`idCredential`) REFERENCES `tbcredential` (`idCredential`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dump dei dati della tabella km-0.tbvenditore: ~2 rows (circa)
+-- Dump dei dati della tabella km-0.tbvenditore: ~0 rows (circa)
 DELETE FROM `tbvenditore`;
 
 -- Dump della struttura di vista km-0.vwadmin
@@ -260,10 +262,6 @@ CREATE TABLE `vwadmin` (
 	`pswd` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
 	`attivo` TINYINT(1) NULL
 ) ENGINE=MyISAM;
-
--- Rimozione temporanea di tabella e creazione della struttura finale della vista
-DROP TABLE IF EXISTS `vwadmin`;
-CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vwadmin` AS select `tbcredential`.`idCredential` AS `idCredential`,`tbcredential`.`email` AS `email`,`tbcredential`.`pswd` AS `pswd`,`tbcredential`.`attivo` AS `attivo` from `tbcredential` where !(`tbcredential`.`idCredential` in ((select `tbvenditore`.`idCredential` from `tbvenditore`) union (select `tbcliente`.`idCredential` from `tbcliente`)));
 
 -- Dump della struttura di vista km-0.vwcliente
 DROP VIEW IF EXISTS `vwcliente`;
@@ -299,9 +297,14 @@ CREATE TABLE `vwvenditore` (
 ) ENGINE=MyISAM;
 
 -- Rimozione temporanea di tabella e creazione della struttura finale della vista
+DROP TABLE IF EXISTS `vwadmin`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vwadmin` AS select `tbcredential`.`idCredential` AS `idCredential`,`tbcredential`.`email` AS `email`,`tbcredential`.`pswd` AS `pswd`,`tbcredential`.`attivo` AS `attivo` from `tbcredential` where !(`tbcredential`.`idCredential` in ((select `tbvenditore`.`idCredential` from `tbvenditore`) union (select `tbcliente`.`idCredential` from `tbcliente`)));
+
+-- Rimozione temporanea di tabella e creazione della struttura finale della vista
 DROP TABLE IF EXISTS `vwcliente`;
 CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vwcliente` AS select `tbcliente`.`idCliente` AS `idCliente`,`tbcliente`.`citta` AS `citta`,`tbcliente`.`provincia` AS `provincia`,`tbcliente`.`via` AS `via`,`tbcliente`.`nome` AS `nome`,`tbcliente`.`cognome` AS `cognome`,`tbcliente`.`CF` AS `CF`,`tbcliente`.`telefono` AS `telefono`,`tbcliente`.`idCredential` AS `idCredential`,`tbcredential`.`email` AS `email`,`tbcredential`.`pswd` AS `pswd`,`tbcredential`.`attivo` AS `attivo` from (`tbcliente` join `tbcredential` on(`tbcredential`.`idCredential` = `tbcliente`.`idCredential`));
 
+-- Rimozione temporanea di tabella e creazione della struttura finale della vista
 DROP TABLE IF EXISTS `vwvenditore`;
 CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vwvenditore` AS select `tv`.`idVenditore` AS `idVenditore`,`tv`.`sitoweb` AS `sitoweb`,`tv`.`partitaIVA` AS `partitaIVA`,`tv`.`ragioneSociale` AS `ragioneSociale`,`tv`.`CF` AS `CF`,`tv`.`idCredential` AS `idCredential`,`tc`.`email` AS `email`,`tc`.`pswd` AS `pswd`,`tc`.`attivo` AS `attivo` from (`tbvenditore` `tv` join `tbcredential` `tc` on(`tv`.`idCredential` = `tc`.`idCredential`));
 
