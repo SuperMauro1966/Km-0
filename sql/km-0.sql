@@ -78,9 +78,10 @@ DROP TABLE IF EXISTS `tbcredential`;
 CREATE TABLE IF NOT EXISTS `tbcredential` (
   `idCredential` int(11) NOT NULL AUTO_INCREMENT,
   `pswd` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL DEFAULT '',
+  `email` varchar(255) NOT NULL,
   `attivo` tinyint(1) DEFAULT 1,
-  PRIMARY KEY (`idCredential`)
+  PRIMARY KEY (`idCredential`),
+  UNIQUE KEY `idx_tbcredential_email_pswd` (`email`,`pswd`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Dump dei dati della tabella km-0.tbcredential: ~2 rows (circa)
@@ -274,7 +275,6 @@ CREATE TABLE `vwcliente` (
 	`cognome` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
 	`CF` VARCHAR(16) NOT NULL COLLATE 'latin1_swedish_ci',
 	`telefono` VARCHAR(14) NOT NULL COLLATE 'latin1_swedish_ci',
-	`idCredential` INT(11) NOT NULL,
 	`email` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
 	`pswd` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
 	`attivo` TINYINT(1) NULL
@@ -289,7 +289,7 @@ CREATE TABLE `vwvenditore` (
 	`partitaIVA` INT(11) NOT NULL,
 	`ragioneSociale` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
 	`CF` VARCHAR(16) NOT NULL COLLATE 'latin1_swedish_ci',
-	`idCredential` INT(11) NOT NULL,
+	`telefono` VARCHAR(14) NOT NULL COLLATE 'latin1_swedish_ci',
 	`email` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
 	`pswd` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
 	`attivo` TINYINT(1) NULL
@@ -301,15 +301,14 @@ CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vwadmin` AS select `tbcred
 
 -- Rimozione temporanea di tabella e creazione della struttura finale della vista
 DROP TABLE IF EXISTS `vwcliente`;
-CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vwcliente` AS select `tbcliente`.`idCliente` AS `idCliente`,`tbcliente`.`citta` AS `citta`,`tbcliente`.`provincia` AS `provincia`,`tbcliente`.`via` AS `via`,`tbcliente`.`nome` AS `nome`,`tbcliente`.`cognome` AS `cognome`,`tbcliente`.`CF` AS `CF`,`tbcliente`.`telefono` AS `telefono`,`tbcliente`.`idCredential` AS `idCredential`,`tbcredential`.`email` AS `email`,`tbcredential`.`pswd` AS `pswd`,`tbcredential`.`attivo` AS `attivo` from (`tbcliente` join `tbcredential` on(`tbcredential`.`idCredential` = `tbcliente`.`idCredential`));
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vwcliente` AS select `tbcliente`.`idCliente` AS `idCliente`,`tbcliente`.`citta` AS `citta`,`tbcliente`.`provincia` AS `provincia`,`tbcliente`.`via` AS `via`,`tbcliente`.`nome` AS `nome`,`tbcliente`.`cognome` AS `cognome`,`tbcliente`.`CF` AS `CF`,`tbcliente`.`telefono` AS `telefono`,`tbcredential`.`email` AS `email`,`tbcredential`.`pswd` AS `pswd`,`tbcredential`.`attivo` AS `attivo` from (`tbcliente` join `tbcredential` on(`tbcredential`.`idCredential` = `tbcliente`.`idCredential`));
 
 -- Rimozione temporanea di tabella e creazione della struttura finale della vista
 DROP TABLE IF EXISTS `vwvenditore`;
-CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vwvenditore` AS select `tv`.`idVenditore` AS `idVenditore`,`tv`.`sitoweb` AS `sitoweb`,`tv`.`partitaIVA` AS `partitaIVA`,`tv`.`ragioneSociale` AS `ragioneSociale`,`tv`.`CF` AS `CF`,`tv`.`idCredential` AS `idCredential`,`tc`.`email` AS `email`,`tc`.`pswd` AS `pswd`,`tc`.`attivo` AS `attivo` from (`tbvenditore` `tv` join `tbcredential` `tc` on(`tv`.`idCredential` = `tc`.`idCredential`));
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vwvenditore` AS select `tv`.`idVenditore` AS `idVenditore`,`tv`.`sitoweb` AS `sitoweb`,`tv`.`partitaIVA` AS `partitaIVA`,`tv`.`ragioneSociale` AS `ragioneSociale`,`tv`.`CF` AS `CF`,`tv`.`telefono` AS `telefono`,`tc`.`email` AS `email`,`tc`.`pswd` AS `pswd`,`tc`.`attivo` AS `attivo` from (`tbvenditore` `tv` join `tbcredential` `tc` on(`tv`.`idCredential` = `tc`.`idCredential`));
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
-`km-0`
