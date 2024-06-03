@@ -44,10 +44,11 @@ def _inputRegistrazione() -> dict:
         reg_param['telefono'] = input("Inserisci il numero di telefono: ")
 
         reg_param['ruolo'] = input("Inserisci il ruolo:\nV o v per venditore\nC o c per cliente\n")
-        while reg_param['ruolo'].upper != 'C' and reg_param['ruolo'].upper != 'V':
+        # while reg_param['ruolo'].upper != 'C' and reg_param['ruolo'].upper != 'V':
+        while reg_param['ruolo'].upper() not in ['C','V'] :
             reg_param['ruolo'] = input("Inserisci il ruolo:\nV o v per venditore\nC o c per cliente\n")
 
-        if reg_param['ruolo'].upper == 'C':
+        if reg_param['ruolo'].upper() == 'C':
             reg_param['nome'] = input("\nInserisci il nome: ")
             reg_param['cognome'] = input("Inserisci il cognome: ")
             reg_param['via'] = input("Inserisci la via: ")    
@@ -82,39 +83,39 @@ def registrati() -> tuple[bool, str]:
     if _check_email(dati_registrazione['email']):
         return False, "Utente già registrato"
     else:
-        if dati_registrazione['ruolo'].upper == 'C':
-            conn = db.ritorna_connessione()
-            cur = conn.cursor()
-            cur.execute(f"INSERT INTO tbcredential (idCredential, email, pswd) VALUES (NULL, '{dati_registrazione['email']}', '{dati_registrazione['password']}');")
-            conn.commit()
-            cur.close()
-    
-            cur = conn.cursor()
-            cur.execute(f"SELECT idCredential FROM tbcredential WHERE email='{dati_registrazione['email']}';")
-            idC = cur.fetchone()[0]
-            cur.close()
-    
-            cur = conn.cursor()
-            cur.execute(f"INSERT INTO tbcliente (idCliente, citta, provincia, via, nome, cognome, CF, telefono, `idCredential) VALUES (NULL, '{dati_registrazione['citta']}', '{dati_registrazione['provincia']}', '{dati_registrazione['via']}', '{dati_registrazione['nome']}', '{dati_registrazione['cognome']}', '{dati_registrazione['codice_fiscale']}', '{dati_registrazione['telefono']}', {idC});")
-            conn.commit()
-            cur.close()
-            print("Account registrato con successo.")
+        conn = db.ritorna_connessione()
+        cur = conn.cursor()
+        conn.begin()
+        cur.execute(f"INSERT INTO tbcredential (idCredential, email, pswd) VALUES (NULL, '{dati_registrazione['email']}', '{dati_registrazione['password']}');")
+
+        cur.execute(f"SELECT idCredential FROM tbcredential WHERE email='{dati_registrazione['email']}';")
+        idC = cur.fetchone()[0]
+
+        if dati_registrazione['ruolo'].upper() == 'C':
+
+            cur.execute(f"""INSERT INTO tbcliente (citta, provincia, via, nome, cognome, CF, telefono, idCredential) 
+                        VALUES ( 
+                        '{dati_registrazione['citta']}', 
+                        '{dati_registrazione['provincia']}', 
+                        '{dati_registrazione['via']}', 
+                        '{dati_registrazione['nome']}', 
+                        '{dati_registrazione['cognome']}', 
+                        '{dati_registrazione['codice_fiscale']}', 
+                        '{dati_registrazione['telefono']}', 
+                         {idC});""")
+
         else:
-            """
-            ragione_sociale = input("\nInserisci la ragione sociale: ")
-            sitoweb = input("Inserisci un eventuale sito web: ")
-            partitaIVA = int(input("Inserisci la partita IVA: "))
-            """
-            conn = db.ritorna_connessione()
-            cur = conn.cursor()
-            cur.execute(f"INSERT INTO tbcredential (idCredential, email, pswd) VALUES (NULL, '{dati_registrazione['email']}', '{dati_registrazione['password']}');")
-            conn.commit()
-            cur.close()
-    
-            cur = conn.cursor()
-            cur.execute("SELECT idCredential FROM tbcredential WHERE email='{email}';")
-            idC = cur.fetchone()[0]
-            cur.execute(f"INSERT INTO tbvenditore (idVenditore, sitoweb, partitaIVA, ragioneSociale, CF, telefono, idCredential) VALUES (NULL,'{dati_registrazione['sitoweb']}', {dati_registrazione['partitaIVA']}, '{dati_registrazione['ragione_sociale']}', '{dati_registrazione['codice_fiscale']}', '{dati_registrazione['telefono']}', {idC});")
-            conn.commit()
+            cur.execute(f"""INSERT INTO tbvenditore (sitoweb, partitaIVA, ragioneSociale, CF, telefono, idCredential) 
+                        VALUES (
+                        '{dati_registrazione['sitoweb']}', 
+                         {dati_registrazione['partitaIVA']}, 
+                        '{dati_registrazione['ragione_sociale']}', 
+                        '{dati_registrazione['codice_fiscale']}', 
+                        '{dati_registrazione['telefono']}', 
+                         {idC});""")
+            
+
+        conn.commit()
+        cur.close()    
     
         return True, "Registrazione completata con successo!"
