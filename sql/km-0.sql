@@ -296,6 +296,10 @@ CREATE TABLE `vwvenditore` (
 ) ENGINE=MyISAM;
 
 -- Rimozione temporanea di tabella e creazione della struttura finale della vista
+DROP TABLE IF EXISTS `vwadmin`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vwadmin` AS select `tbcredential`.`idCredential` AS `idCredential`,`tbcredential`.`email` AS `email`,`tbcredential`.`pswd` AS `pswd`,`tbcredential`.`attivo` AS `attivo` from `tbcredential` where !(`tbcredential`.`idCredential` in ((select `tbvenditore`.`idCredential` from `tbvenditore`) union (select `tbcliente`.`idCredential` from `tbcliente`)));
+
+-- Rimozione temporanea di tabella e creazione della struttura finale della vista
 DROP TABLE IF EXISTS `vwcliente`;
 CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vwcliente` AS select `tbcliente`.`idCliente` AS `idCliente`,`tbcliente`.`citta` AS `citta`,`tbcliente`.`provincia` AS `provincia`,`tbcliente`.`via` AS `via`,`tbcliente`.`nome` AS `nome`,`tbcliente`.`cognome` AS `cognome`,`tbcliente`.`CF` AS `CF`,`tbcliente`.`telefono` AS `telefono`,`tbcredential`.`email` AS `email`,`tbcredential`.`pswd` AS `pswd`,`tbcredential`.`attivo` AS `attivo` from (`tbcliente` join `tbcredential` on(`tbcredential`.`idCredential` = `tbcliente`.`idCredential`));
 
