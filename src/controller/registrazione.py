@@ -53,7 +53,7 @@ def registrati(dati_registrazione: dict) -> tuple[bool, str]:
     cur.close()
 
 
-    if ruolo.upper == 'C' :
+    if dati_registrazione['ruolo'].upper == 'C' :
 
         """
         first_name = input("\nInserisci il nome: ")

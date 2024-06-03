@@ -137,7 +137,7 @@ def test():
         assert registrazione.registrati({'email': "Sergio"})[0] == False
         # creare un dizionario con i dati per terminare la registrazione di ciao riga 140, 1 x venditore, 1 x cliente
 
-        #assert registrazione.registrati({'email': "ciao"})[0]
+        # assert registrazione.registrati({'email': "ciao"})[0]
 
     test_accedi()
     test_registrati() 
