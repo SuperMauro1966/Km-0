@@ -55,7 +55,7 @@ def _inputRegistrazione() -> dict:
             reg_param[label] = input(f"Inserire il campo {label}: ")
     return reg_param
 
-def registrati() -> tuple[bool, str]:
+def registrati(dati_registrazione) -> tuple[bool, str]:
     """
     registra l'utente all'interno del database differenziandolo tra cliente e venditore
     email: email
@@ -72,8 +72,6 @@ def registrati() -> tuple[bool, str]:
     sitoweb: sito web del venditore
     partitaIVA: partita IVA
     """
-    dati_registrazione = {}
-    dati_registrazione = _inputRegistrazione()
     if _check_email(dati_registrazione['email']):
         return False, "Utente già registrato"
     else:
@@ -82,6 +80,19 @@ def registrati() -> tuple[bool, str]:
         conn.begin()
 
         if dati_registrazione['ruolo'].upper() == 'C':
+            print(dati_registrazione)
+            tmp=f"""INSERT INTO vwcliente (citta, provincia, via, nome, cognome, CF, telefono, email, pswd) 
+                        VALUES ( 
+                        '{dati_registrazione['citta']}', 
+                        '{dati_registrazione['provincia']}', 
+                        '{dati_registrazione['via']}', 
+                        '{dati_registrazione['nome']}', 
+                        '{dati_registrazione['cognome']}', 
+                        '{dati_registrazione['codice_fiscale']}', 
+                        '{dati_registrazione['telefono']}', 
+                        '{dati_registrazione['email']}',
+                        '{dati_registrazione['password']}');"""
+            print(tmp)
             cur.execute(f"""INSERT INTO vwcliente (citta, provincia, via, nome, cognome, CF, telefono, email, pswd) 
                         VALUES ( 
                         '{dati_registrazione['citta']}', 
@@ -91,9 +102,10 @@ def registrati() -> tuple[bool, str]:
                         '{dati_registrazione['cognome']}', 
                         '{dati_registrazione['codice_fiscale']}', 
                         '{dati_registrazione['telefono']}', 
-                        '{dati_registrazione['email']}'
+                        '{dati_registrazione['email']}',
                         '{dati_registrazione['password']}');""")
         else:
+            print(dati_registrazione)
             cur.execute(f"""INSERT INTO vwvenditore (sitoweb, partitaIVA, ragioneSociale, CF, telefono, email, pswd) 
                         VALUES (
                         '{dati_registrazione['sitoweb']}', 
@@ -101,7 +113,7 @@ def registrati() -> tuple[bool, str]:
                         '{dati_registrazione['ragione_sociale']}', 
                         '{dati_registrazione['codice_fiscale']}', 
                         '{dati_registrazione['telefono']}', 
-                        '{dati_registrazione['email']}'
+                        '{dati_registrazione['email']}',
                         '{dati_registrazione['password']}');""")
 
 
