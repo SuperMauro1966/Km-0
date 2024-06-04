@@ -20,9 +20,10 @@ def ottieni_dati():
     """
     param = ['email', 'password', 'codice_fiscale', 'telefono']
     dati_cliente_venditore = _input_dati(param)
-    dati_cliente_venditore['ruolo'] = input("""Inserisci il ruolo:
-                                V o v per venditore
-                                C o c per cliente""")
+    print("Inserrisci il ruolo")
+    print("V o v per venditore")
+    print("C o c per cliente")
+    dati_cliente_venditore['ruolo'] = input()
     while dati_cliente_venditore['ruolo'].upper() not in ['C', 'V'] :
             dati_cliente_venditore['ruolo'] = input("Valore non valido(c/v consentiti)")
     if dati_cliente_venditore['ruolo'].upper() == 'C':
