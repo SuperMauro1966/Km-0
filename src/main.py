@@ -1,6 +1,6 @@
 import sys
 from  controller import db, login, registrazione
-
+from view import get_reg_dati
 def main():
     db.apri_connessione()
     #print(globals())
@@ -18,7 +18,8 @@ def main():
             else:
                 print("Errore nel login, l'utente potrebbe non esistere o disattivato dall'admin")
         elif scelta == 2:
-            status, msg = registrazione.registrati()
+            dati_registrazione = get_reg_dati()
+            status, msg = registrazione.registrati(dati_registrazione)
             print(msg)
         else:
             db.chiudi_connessione()
