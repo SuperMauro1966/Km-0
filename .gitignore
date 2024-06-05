@@ -4,3 +4,5 @@
 *.bkp
 #file compilati da python
 *.pyc
+#file docx di word
+*.docx#
