@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `tbcredential` (
   `idCredential` int(11) NOT NULL AUTO_INCREMENT,
   `pswd` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `attivo` tinyint(1) DEFAULT 1,
+  `attivo` tinyint(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`idCredential`),
   UNIQUE KEY `idx_tbcredential_email_pswd` (`email`,`pswd`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -294,6 +294,20 @@ CREATE TABLE `vwvenditore` (
 	`pswd` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
 	`attivo` TINYINT(1) NULL
 ) ENGINE=MyISAM;
+
+-- Dump della struttura di vista km-0.vwruoli_attivi
+DROP VIEW IF EXISTS `vwruoli_attivi`;
+-- Creazione di una tabella temporanea per risolvere gli errori di dipendenza della vista
+CREATE TABLE `vwruoli_attivi` (
+	`id` INT(11) NOT NULL,
+	`email` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
+	`pswd` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
+	`Ruolo` VARCHAR(1) NOT NULL COLLATE 'utf8mb4_general_ci'
+) ENGINE=MyISAM;
+
+-- Rimozione temporanea di tabella e creazione della struttura finale della vista
+DROP TABLE IF EXISTS `vwruoli_attivi`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vwruoli_attivi` AS select `vwvenditore`.`idVenditore` AS `id`,`vwvenditore`.`email` AS `email`,`vwvenditore`.`pswd` AS `pswd`,'V' AS `Ruolo` from `vwvenditore` where `vwvenditore`.`attivo` = 1 union select `vwcliente`.`idCliente` AS `id`,`vwcliente`.`email` AS `email`,`vwcliente`.`pswd` AS `pswd`,'C' AS `Ruolo` from `vwcliente` where `vwcliente`.`attivo` = 1 union select `vwadmin`.`idCredential` AS `id`,`vwadmin`.`email` AS `email`,`vwadmin`.`pswd` AS `pswd`,'A' AS `Ruolo` from `vwadmin` where `vwadmin`.`attivo` = 1;
 
 -- Rimozione temporanea di tabella e creazione della struttura finale della vista
 DROP TABLE IF EXISTS `vwadmin`;
