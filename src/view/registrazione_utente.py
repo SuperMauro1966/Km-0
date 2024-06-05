@@ -1,5 +1,6 @@
 from collections import namedtuple
 # verificare la pwd e l'email.
+
 _InputField = namedtuple('InputField', ['nome', 'etichetta', 'default', 'conv_func'])
 _param_idCredential = [
     _InputField ('email', 'email', '', None), 
@@ -33,6 +34,12 @@ def ottieni_dati() -> dict:
     """
 
     dati_cliente_venditore = _input_dati(_param_idCredential)
+
+    conf_psw = input("Digita un'altra volta la password per confermarla: ")
+    while conf_psw != dati_cliente_venditore['password']:
+        conf_psw = input("Le password non coincidono, reinserirla: ")
+    
+
     print("Inserrisci il ruolo")
     print("V o v per venditore")
     print("C o c per cliente")
@@ -56,6 +63,7 @@ def ottieni_dati() -> dict:
             _InputField ('partitaIVA', 'partita IVA', None, _convert_to_int)
         ]
         dati_aggiuntivi = _input_dati(seller_param)
+        
     dati_cliente_venditore.update(dati_aggiuntivi)
     return dati_cliente_venditore
 
@@ -69,11 +77,6 @@ def _input_dati(fields: list[_InputField]) -> dict:
         temp_val = None
         while temp_val == '' or temp_val is None or temp_val.strip() == '':
             temp_val = input(f"Inserire campo {input_el.etichetta}: ")
-            if input_el.nome == 'password':
-                 conf_psw = input("Digita un'altra volta la password per confermarla: ")
-                 while conf_psw != temp_val:
-                      conf_psw = input("Le password non coincidono, reinserirla: ")
-
         reg_param[input_el.nome] = temp_val
         
     return reg_param
