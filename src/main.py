@@ -1,6 +1,6 @@
 import sys
 from  controller import db, login, registrazione
-from view import get_reg_dati
+from view import get_reg_dati, get_log_dati
 
 
 def main():
@@ -13,12 +13,11 @@ def main():
 
         print("\n")
         if scelta == 1:
-            email = input("Digita l'email: ")
-            password = input("Digita la password: ")
-            if login.accedi(email, password):
+            dati_login = get_log_dati()
+            if login.accedi(dati_login):
                 print("Autenticato correttamente!")
             else:
-                print("Errore nel login, l'utente potrebbe non esistere o disattivato dall'admin")
+                print("Errore nel login, l'utente potrebbe non esistere o essere disattivato dall'admin")
         elif scelta == 2:
             dati_registrazione = get_reg_dati()
             status, msg = registrazione.registrati(dati_registrazione)

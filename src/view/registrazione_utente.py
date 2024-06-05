@@ -1,7 +1,7 @@
 from collections import namedtuple
 # verificare la pwd e l'email.
 
-_InputField = namedtuple('InputField', ['nome', 'etichetta', 'default', 'conv_func'])
+_InputField = namedtuple('_InputField', ['nome', 'etichetta', 'default', 'conv_func'])
 _param_idCredential = [
     _InputField ('email', 'email', '', None), 
     _InputField ('password', 'password', '', None),

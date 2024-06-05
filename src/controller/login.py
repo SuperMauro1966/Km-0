@@ -1,6 +1,6 @@
 from .db import ritorna_connessione
 
-def accedi(email: str, password: str):
+def accedi(dati_login: dict) -> bool:
     """
     ritorna True se l'utente è autorizzato ad accedere all'applicazione con le credenziali fornite
     username (email): email
@@ -8,10 +8,10 @@ def accedi(email: str, password: str):
     """
     conn = ritorna_connessione()
     cur = conn.cursor()
-    cur.execute(f"SELECT id, Ruolo FROM vwruoli_attivi WHERE email='{email}' AND pswd='{password}';")
+    cur.execute(f"SELECT id, Ruolo FROM vwruoli_attivi WHERE email='{dati_login['email']}' AND pswd='{dati_login['email']}';")
     data_row = cur.fetchone()
     if data_row:
-        # crea l'oggetto corrispondente ene recupera i dati
+        # crea l'oggetto corrispondente e ne recupera i dati
         pass
     cur.close()
     return data_row is not None
