@@ -46,10 +46,10 @@ def test():
 
 
 if __name__ == "__main__":
-    cmd=sys.argv[1]
+    cmd = sys.argv[1]
     if cmd == "run":
         main()
     elif cmd == "test":
         test()
     else:
-        print("main run per eseguire il programma","main test per eseguire un test", sep=';')
+        print("main run per eseguire il programma", " main test per eseguire un test", sep = ';')
