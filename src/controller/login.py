@@ -1,6 +1,6 @@
 from .db import ritorna_connessione
 
-def accedi(email, password):
+def accedi(email: str, password: str):
     """
     ritorna True se l'utente è autorizzato ad accedere all'applicazione con le credenziali fornite
     username (email): email
