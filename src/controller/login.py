@@ -8,7 +8,10 @@ def accedi(email, password):
     """
     conn = ritorna_connessione()
     cur = conn.cursor()
-    cur.execute(f"SELECT COUNT(idCredential) FROM tbcredential WHERE email='{email}' AND pswd='{password}' AND attivo=1;")
-    row = cur.fetchone()[0]
+    cur.execute(f"SELECT id, Ruolo FROM vwruoli_attivi WHERE email='{email}' AND pswd='{password}';")
+    data_row = cur.fetchone()
+    if data_row:
+        # crea l'oggetto corrispondente ene recupera i dati
+        pass
     cur.close()
-    return row == 1
+    return data_row is not None
