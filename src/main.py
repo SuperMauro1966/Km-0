@@ -17,7 +17,7 @@ def main():
             if login.accedi(dati_login):
                 print("Autenticato correttamente!")
             else:
-                print("Errore nel login, l'utente potrebbe non esistere o essere disattivato dall'admin")
+                print("Errore nel login: l'utente potrebbe non esistere, essere disattivato dall'admin o le credenziali inserite sono errate")
         elif scelta == 2:
             dati_registrazione = get_reg_dati()
             status, msg = registrazione.registrati(dati_registrazione)

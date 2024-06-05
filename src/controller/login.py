@@ -8,7 +8,7 @@ def accedi(dati_login: dict) -> bool:
     """
     conn = ritorna_connessione()
     cur = conn.cursor()
-    cur.execute(f"SELECT id, Ruolo FROM vwruoli_attivi WHERE email='{dati_login['email']}' AND pswd='{dati_login['email']}';")
+    cur.execute(f"SELECT id, Ruolo FROM vwruoli_attivi WHERE email='{dati_login['email']}' AND pswd='{dati_login['password']}';")
     data_row = cur.fetchone()
     if data_row:
         # crea l'oggetto corrispondente e ne recupera i dati
