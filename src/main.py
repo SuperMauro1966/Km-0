@@ -1,6 +1,8 @@
 import sys
 from  controller import db, login, registrazione
 from view import get_reg_dati
+
+
 def main():
     db.apri_connessione()
     #print(globals())
