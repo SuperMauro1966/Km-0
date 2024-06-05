@@ -36,6 +36,7 @@ def test():
         assert login.accedi("Pluto", "5678")  
         assert login.accedi("Topolino", "11") == False
         assert login.accedi("Plto2", "2") == False
+        
     def test_registrati():
         assert registrazione.registrati({'email': "Sergio"})[0] == False
         assert registrazione.registrati({'email': "ciao"})[0]

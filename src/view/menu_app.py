@@ -1,8 +1,8 @@
 from .menu import MenuItem, SubMenu, Cmd
 from ..controller.login import accedi
-from . import get_reg_dati
+from . import get_reg_dati, get_log_dati
 
-cmd_login = Cmd("Login", None)
+cmd_login = Cmd("Login", get_log_dati)
 cmd_registra = Cmd("Registrazione", get_reg_dati)
 
 item_login = MenuItem("Login", cmd_login, [])
