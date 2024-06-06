@@ -1,30 +1,11 @@
 import sys
 from  controller import db, login, registrazione
 from view import get_reg_dati, get_log_dati
-
+from view.menu import menu_accesso_app
 
 def main():
-    db.apri_connessione()
     #print(globals())
-    while True:
-        scelta = int(input("\nScegli un'opzione:\n1. per accedere\n2. per registrarsi\n3. per uscire\n"))
-        while scelta < 1 or scelta > 3:
-            scelta = int(input("\nScegli un'opzione:\n1. per accedere\n2. per registrarsi\n3. per uscire\n"))
-
-        print("\n")
-        if scelta == 1:
-            dati_login = get_log_dati()
-            if login.accedi(dati_login):
-                print("Autenticato correttamente!")
-            else:
-                print("Errore nel login: l'utente potrebbe non esistere, essere disattivato dall'admin o le credenziali inserite sono errate")
-        elif scelta == 2:
-            dati_registrazione = get_reg_dati()
-            status, msg = registrazione.registrati(dati_registrazione)
-            print(msg)
-        else:
-            db.chiudi_connessione()
-            break
+    menu_accesso_app.run()
 
 def test():
     db.apri_connessione()
