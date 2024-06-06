@@ -3,15 +3,15 @@ from  controller import db, login, registrazione
 from view import get_reg_dati, get_log_dati
 from menu import menu_accesso_app
 
-def main():
+def main() -> None:
     #print(globals())
     db.apri_connessione()
     menu_accesso_app.run()
     db.chiudi_connessione()
 
-def test():
+def test() -> None:
     db.apri_connessione()
-    def test_accedi():
+    def test_accedi() -> None:
         assert login.accedi("Gabriele", "1234") 
         assert login.accedi("Pluto2", "12") == False
         assert login.accedi("Pippo", "5678")   
@@ -20,7 +20,7 @@ def test():
         assert login.accedi("Topolino", "11") == False
         assert login.accedi("Plto2", "2") == False
         
-    def test_registrati():
+    def test_registrati() -> None:
         assert registrazione.registrati({'email': "Sergio"})[0] == False
         assert registrazione.registrati({'email': "ciao"})[0]
 

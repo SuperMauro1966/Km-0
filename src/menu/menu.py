@@ -21,7 +21,7 @@ class SubMenu(BaseMenu):
         self.items = []
     def add_item(self, item: MenuItem) -> None:
         self.items.append(item)
-    def run(self):
+    def run(self) -> None:
         while True:
             scelta = int(input("\nScegli un'opzione:\n1. per accedere\n2. per registrarsi\n3. per uscire\n"))
             while scelta < 1 or scelta > 3:
@@ -34,8 +34,9 @@ class SubMenu(BaseMenu):
                 break
 
 class Cmd(BaseMenu):
-    def __init__(self, name: str, command: Callable[[], None]) -> None:
+    def __init__(self, name: str, command: Callable[[], None], **kwargs) -> None:
         super().__init__(name)
         self.command = command
+        self.kwargs = kwargs
     def run(self) -> None:
-        self.command()
+        self.command(**self.kwargs)

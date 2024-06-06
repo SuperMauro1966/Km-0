@@ -16,7 +16,7 @@ def _convert_to_int(x: str) -> int:
     except ValueError:
          print("Il campo deve essere un numero intero, non una stringa")
 
-def ottieni_dati() -> dict:
+def ottieni_dati() -> None:
     """
     permette all'utente di inserire i campi per registrarsi, differenziandolo tra cliente e venditore, in caso di inserimento di una mail già usata comparirà un messaggio di errore
     email: email
@@ -68,8 +68,6 @@ def ottieni_dati() -> dict:
     dati_cliente_venditore.update(dati_aggiuntivi)
     status, msg = registrazione.registrati(dati_cliente_venditore)
     print(msg)
-
-    
 
 def _input_dati(fields: list[_InputField]) -> dict:
     """
