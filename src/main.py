@@ -1,11 +1,13 @@
 import sys
 from  controller import db, login, registrazione
 from view import get_reg_dati, get_log_dati
-from view.menu import menu_accesso_app
+from menu import menu_accesso_app
 
 def main():
     #print(globals())
+    db.apri_connessione()
     menu_accesso_app.run()
+    db.chiudi_connessione()
 
 def test():
     db.apri_connessione()

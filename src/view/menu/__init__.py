@@ -1,1 +1,0 @@
-from .menu_app import menu_accesso_app

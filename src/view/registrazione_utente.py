@@ -1,4 +1,5 @@
 from collections import namedtuple
+from controller import registrazione
 # verificare la pwd e l'email.
 
 _InputField = namedtuple('_InputField', ['nome', 'etichetta', 'default', 'conv_func'])
@@ -63,9 +64,12 @@ def ottieni_dati() -> dict:
             _InputField ('partitaIVA', 'partita IVA', None, _convert_to_int)
         ]
         dati_aggiuntivi = _input_dati(seller_param)
-        
+    
     dati_cliente_venditore.update(dati_aggiuntivi)
-    return dati_cliente_venditore
+    status, msg = registrazione.registrati(dati_cliente_venditore)
+    print(msg)
+
+    
 
 def _input_dati(fields: list[_InputField]) -> dict:
     """

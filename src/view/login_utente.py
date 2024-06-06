@@ -1,4 +1,6 @@
 from collections import namedtuple
+from controller import login
+#from menu.menu_app import menu_principale_app
 # verificare la pwd e l'email.
 
 _InputField = namedtuple('_InputField', ['nome', 'etichetta', 'default', 'conv_func'])
@@ -15,7 +17,12 @@ def ottieni_dati() -> dict:
     """
 
     dati = _input_dati(_param)
-    return dati
+    if login.accedi(dati):
+        print("Accesso eseguito correttamente")
+        menu_principale_app.run()
+    else:
+        print("Errore nel login: l'utente potrebbe essere disattivato dall'admin o non ancora registrato nell'applicazione")
+
 
 def _input_dati(fields: list[_InputField]) -> dict:
     """
