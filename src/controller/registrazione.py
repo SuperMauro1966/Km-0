@@ -36,7 +36,6 @@ def registrati(dati_registrazione: dict) -> tuple[bool, str]:
     conn = db.ritorna_connessione()
     cur = conn.cursor()
     conn.begin()
-    cur = conn.cursor()
     cur.execute(f"INSERT INTO tbcredential (email, pswd) VALUES ('{dati_registrazione['email']}', '{dati_registrazione['password']}');")
     cur.execute(f"SELECT idCredential FROM tbcredential WHERE email='{dati_registrazione['email']}';")
     idC = cur.fetchone()[0]
