@@ -1,12 +1,12 @@
 from .menu import MenuItem, SubMenu, Cmd
 from view.registrazione_utente import ottieni_dati as get_reg_dati 
 from view.login_utente import ottieni_dati as get_log_dati
-from view.lista_eventi import lista_eventi
+from view.lista_eventi import eventi
 
 # Creazione del menù principale
-_cmd_menu_principale = Cmd("Menù principale",lista_eventi)
+_cmd_menu_principale = Cmd("Menù principale", eventi)
 
-_item_menu_principale = MenuItem("Registrazione", _cmd_menu_principale, [])
+_item_menu_principale = MenuItem("Lista Eventi", _cmd_menu_principale, [])
 
 menu_principale_app = SubMenu("menù principale dell'applicazione")
 menu_principale_app.add_item(_item_menu_principale)

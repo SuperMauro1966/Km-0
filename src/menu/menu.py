@@ -26,6 +26,7 @@ class SubMenu(BaseMenu):
             scelta = int(input("\nScegli un'opzione:\n1. per accedere\n2. per registrarsi\n3. per uscire\n"))
             while scelta < 1 or scelta > 3:
                 scelta = int(input("\nScegli un'opzione:\n1. per accedere\n2. per registrarsi\n3. per uscire\n"))
+            print("\n") # \n usato per mandare a capo ulteriormente la stringa successiva e renderla più leggibile
             if scelta == 1:
                 self.items[0].item.run()
             elif scelta == 2:

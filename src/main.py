@@ -1,6 +1,5 @@
 import sys
 from  controller import db, login, registrazione
-from view import get_reg_dati, get_log_dati
 from menu import menu_accesso_app
 
 def main() -> None:
