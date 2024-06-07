@@ -1,7 +1,9 @@
 from typing import Callable
 from abc import ABC, abstractmethod
+from controller.user_role import UserRole
 
 class BaseMenu(ABC):
+    ruolo_utente: UserRole = None
     def __init__(self, name: str) -> None:
         self.name = name
     
@@ -9,8 +11,12 @@ class BaseMenu(ABC):
     def run() -> None:
         pass
 
+    @classmethod
+    def imposta_ruolo(cls, ruolo: UserRole) -> None:
+        cls.ruolo_utente = ruolo
+
 class MenuItem(object):
-    def __init__(self, label: str, item: BaseMenu, autorizzazioni: str) -> None:
+    def __init__(self, label: str, item: BaseMenu, autorizzazioni: set[UserRole]) -> None:
         self.label = label
         self.item = item
         self.autorizzazioni = autorizzazioni
@@ -19,19 +25,22 @@ class SubMenu(BaseMenu):
     def __init__(self, name: str) -> None:
         super().__init__(name)
         self.items: list[MenuItem] = []
+
     def add_item(self, item: MenuItem) -> None:
         self.items.append(item)
+
     def run(self) -> None:
         self._print()
         self._input_scelta()
 
-    def _print(self):
+    def _print(self) -> None:
         print(self.name)
         for pos, item in  enumerate(self.items, start=1):
-            print(pos,' - ', item.label)
+            if self.ruolo_utente in item.autorizzazioni[self.ruolo_utente]:
+                print(pos,' - ', item.label)
         print("0  -  Uscita")
 
-    def _input_scelta(self):
+    def _input_scelta(self) -> None:
         while True:
             print("Scegli un'opzione")
             scelta = int(input())
@@ -47,5 +56,6 @@ class Cmd(BaseMenu):
         super().__init__(name)
         self.command = command
         self.kwargs = kwargs
+
     def run(self) -> None:
         self.command(**self.kwargs)
