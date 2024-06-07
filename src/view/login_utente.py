@@ -7,7 +7,7 @@ _param = [
     _InputField ('email', 'email', '', None), 
     _InputField ('password', 'password', '', None),
 ]
-
+ruolo=' '
 def ottieni_dati(next_menu = None,**kwargs) -> None:
     """
     permette all'utente di inserire i campi per accedere all'applicazione
@@ -16,13 +16,17 @@ def ottieni_dati(next_menu = None,**kwargs) -> None:
     """
 
     dati = _input_dati(_param)
+    
     if login.accedi(dati):
         print("Accesso eseguito correttamente\n")
+        ruolo = login.ottieni_ruolo(dati)
+        print(ruolo)
         if next_menu:
             next_menu.run()
     else:
         print("Errore nel login: l'utente potrebbe essere disattivato dall'admin o non ancora registrato nell'applicazione")
 
+    
 
 def _input_dati(fields: list[_InputField]) -> dict:
     """

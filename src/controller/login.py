@@ -15,3 +15,10 @@ def accedi(dati_login: dict) -> bool:
         pass
     cur.close()
     return data_row is not None
+
+def ottieni_ruolo(dati_login):
+    conn = ritorna_connessione()
+    cur = conn.cursor()
+    cur.execute(f"SELECT Ruolo FROM vwruoli_attivi WHERE email='{dati_login['email']}' AND pswd='{dati_login['password']}';")
+    data_row = cur.fetchone()[0]
+    return data_row
