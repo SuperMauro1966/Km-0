@@ -27,24 +27,19 @@ class SubMenu(BaseMenu):
 
     def _print(self):
         print(self.name)
-        for pos,item in  enumerate(self.items, start=1):
+        for pos, item in  enumerate(self.items, start=1):
             print(pos,' - ', item.label)
         print("0  -  Uscita")
 
     def _input_scelta(self):
         while True:
             print("Scegli un'opzione")
-            scelta=int(input())
-            while scelta<0 or scelta>2:
-                print("Scegli un'opzione")
-                scelta=int(input())
+            scelta = int(input())
             if scelta == 0:
-                    break
-            else:   
-                for i,s in enumerate(self.items, start=1):
-                    if scelta == i:
-                        self.items[i-1].item.run()
-                        self._print()
+                break
+            elif scelta > 0 and scelta <= len(self.items):
+                self.items[scelta-1].item.run()
+                self._print()
         
 
 class Cmd(BaseMenu):
