@@ -1,6 +1,7 @@
 from typing import Callable
 from abc import ABC, abstractmethod
 from controller.user_role import UserRole
+from view.login_utente import ruolo
 
 class BaseMenu(ABC):
     ruolo_utente: UserRole = None

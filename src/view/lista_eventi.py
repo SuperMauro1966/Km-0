@@ -11,5 +11,8 @@ def eventi():
     elif role == UserRole.VEND:
         print("Sei un venditore")
         print("Nessun evento al momento disponibile")
+        input("Premi invio per continuare")
     elif role == UserRole.CLIENTE:
         print("Sei un cliente")
+        print("Nessun evento al momento disponibile")
+        input("Premi invio per continuare")
