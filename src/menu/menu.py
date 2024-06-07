@@ -18,21 +18,34 @@ class MenuItem(object):
 class SubMenu(BaseMenu):
     def __init__(self, name: str) -> None:
         super().__init__(name)
-        self.items = []
+        self.items: list[MenuItem] = []
     def add_item(self, item: MenuItem) -> None:
         self.items.append(item)
     def run(self) -> None:
+        self._print()
+        self._input_scelta()
+
+    def _print(self):
+        print(self.name)
+        for pos,item in  enumerate(self.items, start=1):
+            print(pos,' - ', item.label)
+        print("0  -  Uscita")
+
+    def _input_scelta(self):
         while True:
-            scelta = int(input("\nScegli un'opzione:\n1. per accedere\n2. per registrarsi\n3. per uscire\n"))
-            while scelta < 1 or scelta > 3:
-                scelta = int(input("\nScegli un'opzione:\n1. per accedere\n2. per registrarsi\n3. per uscire\n"))
-            print("\n") # \n usato per mandare a capo ulteriormente la stringa successiva e renderla più leggibile
-            if scelta == 1:
-                self.items[0].item.run()
-            elif scelta == 2:
-                self.items[1].item.run()
-            else:
-                break
+            print("Scegli un'opzione")
+            scelta=int(input())
+            while scelta<0 or scelta>2:
+                print("Scegli un'opzione")
+                scelta=int(input())
+            if scelta == 0:
+                    break
+            else:   
+                for i,s in enumerate(self.items, start=1):
+                    if scelta == i:
+                        self.items[i-1].item.run()
+                        self._print()
+        
 
 class Cmd(BaseMenu):
     def __init__(self, name: str, command: Callable[[], None], **kwargs) -> None:

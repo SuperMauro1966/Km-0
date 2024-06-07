@@ -1,6 +1,5 @@
 from collections import namedtuple
 from controller import login
-from . import lista_eventi
 # verificare la pwd e l'email.
 
 _InputField = namedtuple('_InputField', ['nome', 'etichetta', 'default', 'conv_func'])
@@ -9,7 +8,7 @@ _param = [
     _InputField ('password', 'password', '', None),
 ]
 
-def ottieni_dati(**kwargs) -> None:
+def ottieni_dati(next_menu = None,**kwargs) -> None:
     """
     permette all'utente di inserire i campi per accedere all'applicazione
     email: email
@@ -19,8 +18,8 @@ def ottieni_dati(**kwargs) -> None:
     dati = _input_dati(_param)
     if login.accedi(dati):
         print("Accesso eseguito correttamente\n")
-        if menu := kwargs.get('next_menu'):
-            lista_eventi.eventi()
+        if next_menu:
+            next_menu.run()
     else:
         print("Errore nel login: l'utente potrebbe essere disattivato dall'admin o non ancora registrato nell'applicazione")
 
