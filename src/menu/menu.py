@@ -36,7 +36,7 @@ class SubMenu(BaseMenu):
     def _print(self) -> None:
         print(self.name)
         for pos, item in  enumerate(self.items, start=1):
-            if self.ruolo_utente in item.autorizzazioni[self.ruolo_utente]:
+            if self.ruolo_utente in item.autorizzazioni:
                 print(pos,' - ', item.label)
         print("0  -  Uscita")
 
