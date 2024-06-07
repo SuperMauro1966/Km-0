@@ -1,11 +1,15 @@
-from controller import db
-from . import login_utente
-def _check_eventi(email: str, password: str) -> str:
-    cur = db.ritorna_connessione
-    cur.execute(f"SELECT Ruolo FROM vwruoli_attivi WHERE email='{email}' AND pswd='{password}';")
-    ruolo = cur.fetchone()[0]
-    return ruolo
+from menu.menu import BaseMenu
+from controller.user_role import UserRole
 
 def eventi():
-    print("Nessun evento disponibile")
-    input("Premi return per uscire")
+    role = BaseMenu.ruolo_utente
+
+    if role == UserRole.ADMIN:
+        print("Sei un admin")
+        print("Nessun evento al momento disponibile")
+        input("Premi invio per continuare")
+    elif role == UserRole.VEND:
+        print("Sei un venditore")
+        print("Nessun evento al momento disponibile")
+    elif role == UserRole.CLIENTE:
+        print("Sei un cliente")
