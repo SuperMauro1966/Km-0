@@ -26,12 +26,3 @@ menu_accesso_app = SubMenu("accedi all'applicazione")
 menu_accesso_app.add_item(_item_login)
 menu_accesso_app.add_item(_item_about)
 menu_accesso_app.add_item(_item_registra)
-
-if ruolo == 'A':
-    menu_accesso_app.imposta_ruolo(UserRole.ADMIN)
-elif ruolo == 'C':
-    menu_accesso_app.imposta_ruolo(UserRole.CLIENTE)
-elif ruolo == 'V':
-    menu_accesso_app.imposta_ruolo(UserRole.VEND)
-else:
-    menu_accesso_app.imposta_ruolo(UserRole.GUEST)

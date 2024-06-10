@@ -1,4 +1,7 @@
 from .db import ritorna_connessione
+from .user_role import carica_user
+from .user import UserRole
+
 
 def accedi(dati_login: dict) -> bool:
     """
@@ -12,7 +15,7 @@ def accedi(dati_login: dict) -> bool:
     data_row = cur.fetchone()
     if data_row:
         # crea l'oggetto corrispondente e ne recupera i dati
-        pass
+        carica_user(data_row['id'], UserRole(data_row['Ruolo']))
     cur.close()
     return data_row is not None
 
