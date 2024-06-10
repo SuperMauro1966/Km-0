@@ -2,7 +2,7 @@ from .menu import MenuItem, SubMenu, Cmd
 from view.registrazione_utente import ottieni_dati as get_reg_dati 
 from view.login_utente import ottieni_dati as get_log_dati
 from view.lista_eventi import eventi
-from controller.user_role import UserRole
+from controller.user import UserRole
 from view.login_utente import ruolo
 
 # Creazione del menù principale
