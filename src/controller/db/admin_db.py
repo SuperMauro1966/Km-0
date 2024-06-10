@@ -6,4 +6,4 @@ def carica_admin(id: int) -> Admin:
     cur = conn.cursor()
     cur.execute(f"SELECT email, pswd, attivo FROM vwadmin WHERE id={id};")
     dati = cur.fetchone()
-    return dati
+    return Admin(dati['email'], dati['password'], id, dati['attivo'])
