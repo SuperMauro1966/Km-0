@@ -7,7 +7,7 @@ def accedi(dati_login: dict) -> bool:
     password: password
     """
     conn = ritorna_connessione()
-    cur = conn.cursor()
+    cur = conn.cursor(dictionary = True)
     cur.execute(f"SELECT id, Ruolo FROM vwruoli_attivi WHERE email='{dati_login['email']}' AND pswd='{dati_login['password']}';")
     data_row = cur.fetchone()
     if data_row:
