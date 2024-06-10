@@ -1,5 +1,7 @@
 from enum import Enum
 from .db.venditore_db import carica_venditore
+from .db.cliente_db import carica_cliente
+from .db.admin_db import carica_admin
 
 class UserRole(Enum):
     ADMIN = 'A'
@@ -9,13 +11,11 @@ class UserRole(Enum):
 
 _current_user = None
 
-def carica_user(id, ruolo: UserRole):
+def carica_user(id: int, ruolo: UserRole):
     if ruolo == UserRole.ADMIN:
-        #caricare i dati di admin
-        pass
+        _current_user = carica_admin(id)
     if ruolo ==UserRole.CLIENTE:
-        #caricare i dati di cliente
-        pass
+        _current_user = carica_cliente(id)
     if ruolo == UserRole.VEND:
         _current_user = carica_venditore(id)
 
