@@ -24,8 +24,8 @@ _item_about = MenuItem("About", _cmd_about, {UserRole.VEND, UserRole.CLIENTE, Us
 
 menu_accesso_app = SubMenu("accedi all'applicazione")
 menu_accesso_app.add_item(_item_login)
-menu_accesso_app.add_item(_item_registra)
 menu_accesso_app.add_item(_item_about)
+menu_accesso_app.add_item(_item_registra)
 
 if ruolo == 'A':
     menu_accesso_app.imposta_ruolo(UserRole.ADMIN)
