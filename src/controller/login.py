@@ -1,5 +1,5 @@
 from .db import ritorna_connessione
-from .user_role import carica_user
+from .user import carica_user
 from .user import UserRole
 
 

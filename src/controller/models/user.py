@@ -1,4 +1,4 @@
-from controller.user_role import UserRole
+from controller.user import UserRole
 
 class BaseUsers(object):
     ruolo = None

@@ -1,5 +1,5 @@
 from menu.menu import BaseMenu
-from controller.user_role import UserRole
+from controller.user import UserRole
 
 def eventi():
     role = BaseMenu.ruolo_utente
