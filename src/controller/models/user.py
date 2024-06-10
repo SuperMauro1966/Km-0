@@ -11,7 +11,7 @@ class BaseUsers(object):
 
 class Vend(BaseUsers):
     def __init__(self, email, password, id, sito_web, partita_IVA, ragione_sociale, codice_fiscale, telefono) -> None:
-        super().__init__(email, password, id,sito_web, partita_IVA, ragione_sociale, codice_fiscale, telefono)
+        super().__init__(email, password, id)
         self.sito_web = sito_web
         self.partita_IVA = partita_IVA
         self.ragione_sociale = ragione_sociale
@@ -21,7 +21,7 @@ class Vend(BaseUsers):
 
 class Cliente(BaseUsers):
     def __init__(self, email, password, id, citta, provincia, via, nome,cognome, codice_fiscale, telefono) -> None:
-        super().__init__(email, password, id, citta, provincia, via, nome,cognome, codice_fiscale, telefono)
+        super().__init__(email, password, id)
         self.citta = citta
         self.provincia = provincia
         self.via = via

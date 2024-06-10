@@ -1,4 +1,4 @@
-from controller import db
+from controller.db import db
 
 def _check_email(email: str) -> bool:
     """

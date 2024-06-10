@@ -1,1 +1,1 @@
-from db import ritorna_connessione, apri_connessione, chiudi_connessione
+from .db import ritorna_connessione, apri_connessione, chiudi_connessione
