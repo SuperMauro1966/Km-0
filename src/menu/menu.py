@@ -1,7 +1,6 @@
 from typing import Callable
 from abc import ABC, abstractmethod
 from controller.user_role import UserRole
-from view.login_utente import ruolo
 
 class BaseMenu(ABC):
     ruolo_utente: UserRole = None
@@ -36,9 +35,10 @@ class SubMenu(BaseMenu):
 
     def _print(self) -> None:
         print(self.name)
-        for pos, item in  enumerate(self.items, start=1):
-            if self.ruolo_utente in item.autorizzazioni:
-                print(pos,' - ', item.label)
+        vis_el = [el for el in self.items if self.ruolo_utente in el.autorizzazioni]
+
+        for pos, vis_el in enumerate(vis_el, start=1):
+            print(pos, ' - ', vis_el.label)
         print("0  -  Uscita")
 
     def _input_scelta(self) -> None:
