@@ -1,5 +1,5 @@
-from models.user import Cliente
-from db import ritorna_connessione
+from controller.models.user import Cliente
+from db.db import ritorna_connessione
 
 def carica_cliente(id: int) -> Cliente:
     conn = ritorna_connessione()

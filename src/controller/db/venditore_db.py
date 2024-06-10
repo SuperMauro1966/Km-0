@@ -1,5 +1,5 @@
-from models.user import Vend
-from db import ritorna_connessione
+from controller.models.user import Vend
+from db.db import ritorna_connessione
 
 def carica_venditore(id: int) -> Vend:
     conn = ritorna_connessione()

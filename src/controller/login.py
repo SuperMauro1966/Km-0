@@ -1,6 +1,5 @@
-from .db import ritorna_connessione
-from .user import carica_user
-from .user import UserRole
+from .db.db import ritorna_connessione
+from .user import carica_user, UserRole
 
 
 def accedi(dati_login: dict) -> bool:
