@@ -10,7 +10,7 @@ _param = [
 ]
 ruolo = ''
 
-def ottieni_dati(next_menu=None, **kwargs) -> None:
+def ottieni_dati(next_menu = None, **kwargs) -> None:
     """
     Permette all'utente di inserire i campi per accedere all'applicazione.
     """
@@ -18,7 +18,7 @@ def ottieni_dati(next_menu=None, **kwargs) -> None:
     
     if accedi(dati):
         print("Accesso eseguito correttamente\n")
-        ruolo = ottieni_ruolo(dati)
+        ruolo = ottieni_ruolo()
         if next_menu:
             next_menu.imposta_ruolo(UserRole(ruolo))
             next_menu.run()

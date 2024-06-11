@@ -1,4 +1,4 @@
-from .menu import MenuItem, SubMenu, Cmd, BaseMenu
+from .menu import MenuItem, SubMenu, Cmd
 from view.registrazione_utente import ottieni_dati as get_reg_dati 
 from view.login_utente import ottieni_dati as get_log_dati
 from view.lista_eventi import eventi

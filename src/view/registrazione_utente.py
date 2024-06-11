@@ -10,12 +10,6 @@ _param_idCredential = [
     _InputField ('telefono', 'numero di telefono', '', None)
 ]
 
-def _convert_to_int(x: str) -> int:
-    try:
-        return int(x)
-    except ValueError:
-         print("Il campo deve essere un numero intero, non una stringa")
-
 def ottieni_dati() -> None:
     """
     permette all'utente di inserire i campi per registrarsi, differenziandolo tra cliente e venditore, in caso di inserimento di una mail già usata comparirà un messaggio di errore
@@ -61,7 +55,7 @@ def ottieni_dati() -> None:
         seller_param = [
             _InputField ('ragione_sociale', 'ragione sociale', '', None),
             _InputField ('sitoweb', 'sito web', '', None),
-            _InputField ('partitaIVA', 'partita IVA', None, _convert_to_int)
+            _InputField ('partitaIVA', 'partita IVA', None, int)
         ]
         dati_aggiuntivi = _input_dati(seller_param)
     
@@ -77,8 +71,13 @@ def _input_dati(fields: list[_InputField]) -> dict:
     reg_param = {}
     for input_el in fields:
         temp_val = None
-        while temp_val == '' or temp_val is None or temp_val.strip() == '':
-            temp_val = input(f"Inserire campo {input_el.etichetta}: ")
+        while temp_val is None or temp_val.strip() == '':
+            temp_val = input(f"Inserire campo {input_el.etichetta}({input_el.default}): ")
+            if input_el.conv_func == int or input_el.conv_func == float:
+                try:
+                    int(temp_val)
+                except ValueError:
+                    print("Il campo deve essere un numero intero, non una stringa")
         reg_param[input_el.nome] = temp_val
         
     return reg_param

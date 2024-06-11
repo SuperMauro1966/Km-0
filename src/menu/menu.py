@@ -40,7 +40,6 @@ class SubMenu(BaseMenu):
         for pos, vis_el in enumerate(vis_el, start=1):
             print(pos, ' - ', vis_el.label)
         print("0  -  Uscita")
-        print(self.ruolo_utente)
 
     def _input_scelta(self) -> None:
         vis_el = [el for el in self.items if self.ruolo_utente in el.autorizzazioni]
@@ -50,7 +49,7 @@ class SubMenu(BaseMenu):
             if scelta == 0:
                 break
             elif scelta > 0 and scelta <= len(vis_el): # Errore sulla linea
-                self.items[scelta-1].item.run()
+                vis_el[scelta-1].item.run()
                 self._print()
         
 
@@ -61,4 +60,5 @@ class Cmd(BaseMenu):
         self.kwargs = kwargs
 
     def run(self) -> None:
+        print("comando: ", self.command)
         self.command(**self.kwargs)
