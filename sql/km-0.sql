@@ -223,6 +223,7 @@ DELETE FROM `tbsistabiliscein`;
 DROP TABLE IF EXISTS `tbubicazione`;
 CREATE TABLE IF NOT EXISTS `tbubicazione` (
   `idUbicazione` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) NOT NULL,
   `citta` varchar(255) NOT NULL,
   `provincia` varchar(2) NOT NULL,
   `via` varchar(255) NOT NULL,
