@@ -1,9 +1,8 @@
-from menu.menu import BaseMenu
-from controller.user import UserRole
+from controller.user import ottieni_ruolo
+from controller.user_role import UserRole
 
 def eventi():
-    role = BaseMenu.ruolo_utente
-
+    role = ottieni_ruolo()
     if role == UserRole.ADMIN:
         print("Sei un admin")
         print("Nessun evento al momento disponibile")
