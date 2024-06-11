@@ -32,6 +32,6 @@ class Cliente(BaseUsers):
 
 class Admin(BaseUsers):
     def __init__(self, email, password, id, attivo) -> None:
-        super().__init__(email, password, id, attivo)
+        super().__init__(email, password, id)
         self.attivo = attivo
         self.ruolo = UserRole.ADMIN
