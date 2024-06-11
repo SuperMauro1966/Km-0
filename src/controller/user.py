@@ -1,13 +1,7 @@
-from enum import Enum
+from .user_role import UserRole
 from .db.venditore_db import carica_venditore
 from .db.cliente_db import carica_cliente
 from .db.admin_db import carica_admin
-
-class UserRole(Enum):
-    ADMIN = 'A'
-    VEND = 'V'
-    CLIENTE = 'C'
-    GUEST = 'G'
 
 _current_user = None
 

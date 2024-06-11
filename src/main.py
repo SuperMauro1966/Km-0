@@ -1,11 +1,13 @@
 import sys
 from  controller.db import db
 from controller import login, registrazione
+from controller.user_role import UserRole
 from menu import menu_accesso_app
 
 def main() -> None:
     #print(globals())
     db.apri_connessione()
+    menu_accesso_app.imposta_ruolo(UserRole.GUEST)
     menu_accesso_app.run()
     db.chiudi_connessione()
 

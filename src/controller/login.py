@@ -1,6 +1,7 @@
 from .db.db import ritorna_connessione
-from .user import carica_user, UserRole
-
+from .user_role import UserRole
+from .user import carica_user
+from menu.menu import BaseMenu
 
 def accedi(dati_login: dict) -> bool:
     """
@@ -14,13 +15,7 @@ def accedi(dati_login: dict) -> bool:
     data_row = cur.fetchone()
     if data_row:
         # crea l'oggetto corrispondente e ne recupera i dati
+        BaseMenu.imposta_ruolo(UserRole(data_row['Ruolo']))
         carica_user(data_row['id'], UserRole(data_row['Ruolo']))
     cur.close()
     return data_row is not None
-
-def ottieni_ruolo(dati_login: dict) -> str:
-    conn = ritorna_connessione()
-    cur = conn.cursor()
-    cur.execute(f"SELECT Ruolo FROM vwruoli_attivi WHERE email='{dati_login['email']}' AND pswd='{dati_login['password']}';")
-    data_row = cur.fetchone()[0]
-    return data_row
