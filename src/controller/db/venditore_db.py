@@ -2,6 +2,9 @@ from controller.models.user import Vend
 from .db import ritorna_connessione
 
 def carica_venditore(id: int) -> Vend:
+    """
+    Riprende i campi interessati del venditore che ha appena effettuato l'accesso e li restituisce.
+    """
     conn = ritorna_connessione()
     cur = conn.cursor(dictionary = True)
     cur.execute(f"""SELECT idVenditore, sitoweb, partitaIVA, ragioneSociale, CF,

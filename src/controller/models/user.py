@@ -17,7 +17,7 @@ class Vend(BaseUsers):
         self.ragione_sociale = ragione_sociale
         self.codice_fiscale = codice_fiscale
         self.telefono =  telefono
-        ruolo = UserRole.VEND
+        self.ruolo = UserRole.VEND
 
 class Cliente(BaseUsers):
     def __init__(self, email, password, id, citta, provincia, via, nome,cognome, codice_fiscale, telefono) -> None:
@@ -29,9 +29,9 @@ class Cliente(BaseUsers):
         self.cognome = cognome
         self.codice_fiscale = codice_fiscale
         self.telefono =  telefono
-        ruolo = UserRole.CLIENTE
+        self.ruolo = UserRole.CLIENTE
 
 class Admin(BaseUsers):
     def __init__(self, email, password, id, attivo) -> None:
         super().__init__(email, password, id, attivo)
-        ruolo = UserRole.ADMIN
+        self.ruolo = UserRole.ADMIN

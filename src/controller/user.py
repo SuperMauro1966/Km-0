@@ -6,9 +6,12 @@ from .db.admin_db import carica_admin
 _current_user = None
 
 def carica_user(id: int, ruolo: UserRole):
+    """
+    Salva i campi in una classe.
+    """
+    global _current_user
     if ruolo == UserRole.ADMIN:
         _current_user = carica_admin(id)
-        print(_current_user.ruolo)
     if ruolo == UserRole.CLIENTE:
         _current_user = carica_cliente(id)
     if ruolo == UserRole.VEND:
@@ -16,4 +19,7 @@ def carica_user(id: int, ruolo: UserRole):
     
 
 def ottieni_ruolo() -> UserRole:
+    """
+    Restituisce il ruolo dell'utente che ha appena effettuato l'accesso.
+    """
     return _current_user.ruolo
