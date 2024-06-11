@@ -18,7 +18,7 @@ _cmd_login = Cmd("Login", get_log_dati, next_menu = menu_principale_app)
 _cmd_about = Cmd("About", None)
 
 _item_login = MenuItem("Login", _cmd_login, {UserRole.GUEST, UserRole.ADMIN, UserRole.VEND, UserRole.CLIENTE})
-_item_registra = MenuItem("Registrazione", _cmd_registra, {UserRole.GUEST})
+_item_registra = MenuItem("Registrazione", _cmd_registra, {UserRole.GUEST, UserRole.ADMIN, UserRole.CLIENTE, UserRole.VEND})
 _item_about = MenuItem("About", _cmd_about, {UserRole.VEND, UserRole.CLIENTE, UserRole.ADMIN})
 
 menu_accesso_app = SubMenu("accedi all'applicazione")

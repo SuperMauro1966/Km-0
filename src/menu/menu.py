@@ -42,13 +42,13 @@ class SubMenu(BaseMenu):
         print("0  -  Uscita")
 
     def _input_scelta(self) -> None:
-        vis_el = [el for el in self.items if self.ruolo_utente in el.autorizzazioni]
         while True:
+            vis_el = [el for el in self.items if self.ruolo_utente in el.autorizzazioni]
             print("Scegli un'opzione")
             scelta = int(input())
             if scelta == 0:
                 break
-            elif scelta > 0 and scelta <= len(vis_el): # Errore sulla linea
+            elif scelta > 0 and scelta <= len(vis_el):
                 vis_el[scelta-1].item.run()
                 self._print()
         
