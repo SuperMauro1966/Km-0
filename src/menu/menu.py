@@ -60,5 +60,4 @@ class Cmd(BaseMenu):
         self.kwargs = kwargs
 
     def run(self) -> None:
-        print("comando: ", self.command)
         self.command(**self.kwargs)
