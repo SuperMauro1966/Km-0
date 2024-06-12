@@ -71,8 +71,7 @@ def _input_dati(fields: list[_InputField]) -> dict:
 
     for input_el in fields:
         while True:
-            print(input_el.etichetta, input_el.default)
-            temp_val = input()
+            temp_val = input(f"{input_el.etichetta}(default: {input_el.default}): ")
             if temp_val == '':
                 if input_el.default:
                     reg_param[input_el.nome] = input_el.default
