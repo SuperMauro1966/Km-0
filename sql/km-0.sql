@@ -133,11 +133,11 @@ DELETE FROM `tbmodalitapagamento`;
 -- Dump della struttura di tabella km-0.tboffre
 DROP TABLE IF EXISTS `tboffre`;
 CREATE TABLE IF NOT EXISTS `tboffre` (
-  `idPagamento` int(11) NOT NULL,
+  `idVenditore` int(11) NOT NULL,
   `idServizio` int(11) NOT NULL,
   `prezzo` float NOT NULL,
   `quantita` text NOT NULL,
-  PRIMARY KEY (`idPagamento`,`idServizio`)
+  PRIMARY KEY (`idVenditore`,`idServizio`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Dump dei dati della tabella km-0.tboffre: ~0 rows (circa)
