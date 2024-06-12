@@ -1,10 +1,8 @@
-from db import ritorna_connessione
-from view.input_ubicazione import get_data_ubicazione as inp_ubi, check_ubicazione
+from .db.db import ritorna_connessione
 
-def inserimento_ubicazione():
+def inserimento_ubicazione(dati_ubicazione):
     conn = ritorna_connessione()
     cur = conn.cursor()
-    dati_ubicazione = inp_ubi()
     cur.execute(f"""INSERT INTO tbubicazione (nome, citta, provincia, via, fissa, orario, attiva) 
                 VALUES (
                 '{dati_ubicazione['nome']}',
@@ -16,11 +14,7 @@ def inserimento_ubicazione():
                  {dati_ubicazione['attivo']});""")
     cur.close() 
 
-def modifica_ubicazione() -> None:
-    nome = ''
-    while not check_ubicazione(nome):
-        nome = input("digita il nome dell'ubicazione da modificare: ")    
-    dati_ubicazione = inp_ubi()
+def modifica_ubicazione(dati_ubicazione,nome) -> None:
     conn = ritorna_connessione()
     cur = conn.cursor()
     cur.execute(f"""UPDATE tbubicazione
@@ -35,10 +29,7 @@ def modifica_ubicazione() -> None:
                 WHERE nome='{nome}';""")
     cur.close()
 
-def elimina_ubicazione() -> None:
-    nome = ''
-    while not check_ubicazione(nome):
-        nome = input("digita il nome dell'ubicazione da modificare: ")    
+def elimina_ubicazione(nome) -> None: 
     conn = ritorna_connessione()
     cur = conn.cursor()
     cur.execute(f"""DELETE FROM tbubicazione 
