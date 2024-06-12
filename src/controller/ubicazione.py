@@ -12,21 +12,22 @@ def inserimento_ubicazione(dati_ubicazione):
                  {dati_ubicazione['fissa']}, 
                 '{dati_ubicazione['orario']}', 
                  {dati_ubicazione['attivo']});""")
+    conn.commit()
     cur.close() 
 
 def modifica_ubicazione(dati_ubicazione,nome) -> None:
     conn = ritorna_connessione()
     cur = conn.cursor()
-    cur.execute(f"""UPDATE tbubicazione
-                SET 
+    cur.execute(f"""UPDATE tbubicazione SET 
                 nome='{dati_ubicazione['nome']}',
                 citta='{dati_ubicazione['citta']}',
                 provincia='{dati_ubicazione['provincia']}',
                 via='{dati_ubicazione['via']}',
-                fissa='{dati_ubicazione['fissa']}',
+                fissa={dati_ubicazione['fissa']},
                 orario='{dati_ubicazione['orario']}',
-                attivo={dati_ubicazione['attivo']}
+                attiva={dati_ubicazione['attivo']}
                 WHERE nome='{nome}';""")
+    conn.commit()
     cur.close()
 
 def elimina_ubicazione(nome) -> None: 
@@ -34,7 +35,14 @@ def elimina_ubicazione(nome) -> None:
     cur = conn.cursor()
     cur.execute(f"""DELETE FROM tbubicazione 
                 WHERE nome='{nome}';""")
+    conn.commit()
     cur.close()
     
-def mostra_ubicazione():
-    pass
+def mostra_ubicazione(nome) -> dict:
+    conn = ritorna_connessione()
+    cur = conn.cursor(dictionary=True)
+    cur.execute(f"""SELECT nome, citta, provincia, via, fissa, orario, attiva FROM tbubicazione 
+                WHERE nome='{nome}';""")
+    dati=cur.fetchone()
+    cur.close()
+    return dati
