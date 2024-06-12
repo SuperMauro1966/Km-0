@@ -49,6 +49,7 @@ class SubMenu(BaseMenu):
             if scelta == 0:
                 break
             elif scelta > 0 and scelta <= len(vis_el):
+                print()
                 vis_el[scelta-1].item.run()
                 self._print()
         
