@@ -5,8 +5,8 @@ from controller.user_role import UserRole
 
 _InputField = namedtuple('_InputField', ['nome', 'etichetta', 'default', 'conv_func'])
 _param = [
-    _InputField('email', 'email', '', None), 
-    _InputField('password', 'password', '', None),
+    _InputField('email', 'email', None, None), 
+    _InputField('password', 'password', None, None)
 ]
 ruolo = ''
 
@@ -27,12 +27,28 @@ def ottieni_dati(next_menu = None, **kwargs) -> None:
 
 def _input_dati(fields: list[_InputField]) -> dict:
     """
-    Salva gli input nel dizionario.
+    Salva gli input del dizionario.
     """
     reg_param = {}
+
     for input_el in fields:
-        temp_val = None
-        while temp_val is None or temp_val.strip() == '':
-            temp_val = input(f"Inserire campo {input_el.etichetta}: ")
-        reg_param[input_el.nome] = temp_val
+        while True:
+            print(input_el.etichetta, input_el.default)
+            temp_val = input()
+            if temp_val == '':
+                if input_el.default:
+                    reg_param[input_el.nome] = input_el.default
+                    break
+                else:
+                    print("è necessario specificare un valore")
+            if input_el.conv_func:
+                try:
+                    reg_param[input_el.nome] = input_el.conv_func(temp_val)
+                except ValueError:
+                    print("Errore nella conversione del tipo di dati")
+                else:
+                    break
+            else:
+                reg_param[input_el.nome] = temp_val
+                break
     return reg_param

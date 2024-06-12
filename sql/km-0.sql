@@ -241,7 +241,7 @@ DROP TABLE IF EXISTS `tbvenditore`;
 CREATE TABLE IF NOT EXISTS `tbvenditore` (
   `idVenditore` int(11) NOT NULL AUTO_INCREMENT,
   `sitoweb` varchar(255) NOT NULL,
-  `partitaIVA` int(11) NOT NULL,
+  `partitaIVA` varchar(25) NOT NULL,
   `ragioneSociale` varchar(255) NOT NULL,
   `CF` varchar(16) NOT NULL,
   `telefono` varchar(14) NOT NULL,
@@ -249,7 +249,7 @@ CREATE TABLE IF NOT EXISTS `tbvenditore` (
   PRIMARY KEY (`idVenditore`),
   KEY `codCredential` (`idCredential`) USING BTREE,
   CONSTRAINT `FK_tbvenditore_idCredential_tbcredential_idCredential` FOREIGN KEY (`idCredential`) REFERENCES `tbcredential` (`idCredential`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Dump dei dati della tabella km-0.tbvenditore: ~0 rows (circa)
 DELETE FROM `tbvenditore`;
