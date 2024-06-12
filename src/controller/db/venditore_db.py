@@ -10,7 +10,7 @@ def carica_venditore(id: int) -> Vend:
     cur.execute(f"""SELECT idVenditore, sitoweb, partitaIVA, ragioneSociale, CF,
                  telefono, email, pswd, attivo FROM vwvenditore WHERE idVenditore={id};""")
     dati = cur.fetchone()
-    return Vend(dati['email'], dati['pswd'], dati['idVenditore'], dati['sitoweb'],
+    return Vend(dati['email'], dati['pswd'], id, dati['attivo'], dati['idVenditore'], dati['sitoweb'],
                 dati['partitaIVA'], dati['ragioneSociale'], dati['CF'],
                 dati['telefono'])
  

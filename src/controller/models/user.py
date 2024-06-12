@@ -3,14 +3,15 @@ from controller.user import UserRole
 class BaseUsers(object):
     ruolo = None
 
-    def __init__(self, email, password, id) -> None:
+    def __init__(self, email, password, id, attivo) -> None:
         self.email = email
         self.password = password
         self.id = id
+        self.attivo = attivo
 
 class Vend(BaseUsers):
-    def __init__(self, email, password, id, sito_web, partita_IVA, ragione_sociale, codice_fiscale, telefono) -> None:
-        super().__init__(email, password, id)
+    def __init__(self, email, password, id, attivo, sito_web, partita_IVA, ragione_sociale, codice_fiscale, telefono) -> None:
+        super().__init__(email, password, id, attivo)
         self.sito_web = sito_web
         self.partita_IVA = partita_IVA
         self.ragione_sociale = ragione_sociale
@@ -19,8 +20,8 @@ class Vend(BaseUsers):
         self.ruolo = UserRole.VEND
 
 class Cliente(BaseUsers):
-    def __init__(self, email, password, id, citta, provincia, via, nome,cognome, codice_fiscale, telefono) -> None:
-        super().__init__(email, password, id)
+    def __init__(self, email, password, id, attivo, citta, provincia, via, nome,cognome, codice_fiscale, telefono) -> None:
+        super().__init__(email, password, id, attivo)
         self.citta = citta
         self.provincia = provincia
         self.via = via
@@ -32,6 +33,5 @@ class Cliente(BaseUsers):
 
 class Admin(BaseUsers):
     def __init__(self, email, password, id, attivo) -> None:
-        super().__init__(email, password, id)
-        self.attivo = attivo
+        super().__init__(email, password, id, attivo)
         self.ruolo = UserRole.ADMIN

@@ -4,10 +4,10 @@ from controller import registrazione
 
 _InputField = namedtuple('_InputField', ['nome', 'etichetta', 'default', 'conv_func'])
 _param_idCredential = [
-    _InputField ('email', 'email', '', None), 
-    _InputField ('password', 'password', '', None),
-    _InputField ('codice_fiscale', 'codice fiscale', '', None),
-    _InputField ('telefono', 'numero di telefono', '', None)
+    _InputField ('email', 'email', None, None), 
+    _InputField ('password', 'password', None, None),
+    _InputField ('codice_fiscale', 'codice fiscale', None, None),
+    _InputField ('telefono', 'numero di telefono', None, None)
 ]
 
 def ottieni_dati() -> None:
@@ -44,18 +44,18 @@ def ottieni_dati() -> None:
     
     if dati_cliente_venditore['ruolo'].upper() == 'C':
         client_param = [
-            _InputField ('nome', 'nome', '', None), 
-            _InputField ('cognome', 'cognome', '', None),
-            _InputField ('citta', 'città', '', None),
-            _InputField ('provincia', 'provincia', '', None),
-            _InputField ('via', 'indirizzo di casa', '', None)
+            _InputField ('nome', 'nome', None, None), 
+            _InputField ('cognome', 'cognome', None, None),
+            _InputField ('citta', 'città', None, None),
+            _InputField ('provincia', 'provincia', None, None),
+            _InputField ('via', 'indirizzo di casa', None, None)
         ]
         dati_aggiuntivi = _input_dati(client_param)
     else:
         seller_param = [
-            _InputField ('ragione_sociale', 'ragione sociale', '', None),
-            _InputField ('sitoweb', 'sito web', '', None),
-            _InputField ('partitaIVA', 'partita IVA', None, int)
+            _InputField ('ragione_sociale', 'ragione sociale', None, None),
+            _InputField ('sitoweb', 'sito web', None, None),
+            _InputField ('partitaIVA', 'partita IVA', None, None)
         ]
         dati_aggiuntivi = _input_dati(seller_param)
     
@@ -65,19 +65,28 @@ def ottieni_dati() -> None:
 
 def _input_dati(fields: list[_InputField]) -> dict:
     """
-    salva gli input nel dizionario
+    Salva gli input del dizionario.
     """
-
     reg_param = {}
+
     for input_el in fields:
-        temp_val = None
-        while temp_val is None or temp_val.strip() == '':
-            temp_val = input(f"Inserire campo {input_el.etichetta}({input_el.default}): ")
-            if input_el.conv_func == int or input_el.conv_func == float:
+        while True:
+            print(input_el.etichetta, input_el.default)
+            temp_val = input()
+            if temp_val == '':
+                if input_el.default:
+                    reg_param[input_el.nome] = input_el.default
+                    break
+                else:
+                    print("è necessario specificare un valore")
+            if input_el.conv_func:
                 try:
-                    int(temp_val)
+                    reg_param[input_el.nome] = input_el.conv_func(temp_val)
                 except ValueError:
-                    print("Il campo deve essere un numero intero, non una stringa")
-        reg_param[input_el.nome] = temp_val
-        
+                    print("Errore nella conversione del tipo di dati")
+                else:
+                    break
+            else:
+                reg_param[input_el.nome] = temp_val
+                break
     return reg_param
