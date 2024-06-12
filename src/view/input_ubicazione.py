@@ -1,35 +1,33 @@
 from collections import namedtuple
 from controller.db.db import ritorna_connessione
-from controller.ubicazione import inserimento_ubicazione,modifica_ubicazione,elimina_ubicazione, mostra_ubicazione 
+from controller.ubicazione import inserimento_ubicazione, modifica_ubicazione, elimina_ubicazione, mostra_ubicazione
 
-def menu(next_menu = None):
+def menu_ubi(next_menu = None) -> None:
     if next_menu:
         next_menu.run()
 
-def inserimento_dati():
+def inserimento_dati() -> None:
     dict = input_dati()
     inserimento_ubicazione(dict)
 
-def modifica_dati():
+def modifica_dati() -> None:
     nome = ''
     while not check_ubicazione(nome):
         nome = input("digita il nome dell'ubicazione da modificare: ")
     dict = input_dati()
-    modifica_ubicazione(dict,nome)
+    modifica_ubicazione(dict, nome)
 
-def elimina_dati():
+def elimina_dati() -> None:
     nome = ''
     while not check_ubicazione(nome):
-        nome = input("digita il nome dell'ubicazione da eliminare: ") 
+        nome = input("digita il nome dell'ubicazione da eliminare: ")
     elimina_ubicazione(nome)
 
-def mostra_dati():
+def mostra_dati() -> None:
     nome = ''
     while not check_ubicazione(nome):
         nome = input("digita il nome dell'ubicazione da mostrare: ") 
     mostra_ubicazione(nome)
-    
-
     
 def input_dati() -> dict:
     """
@@ -48,8 +46,7 @@ def input_dati() -> dict:
     ]
     for input_el in param:
         while True:
-            print(input_el.etichetta, input_el.default)
-            temp_val = input()
+            temp_val = input(f"{input_el.etichetta}(default: {input_el.default}): ")
             if temp_val == '':
                 if input_el.default:
                     reg_param[input_el.nome] = input_el.default
@@ -67,6 +64,7 @@ def input_dati() -> dict:
                 reg_param[input_el.nome] = temp_val
                 break
     return reg_param
+
 def check_ubicazione(nome: str) -> bool:
     conn = ritorna_connessione()
     cur = conn.cursor(dictionary = True)
