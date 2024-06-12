@@ -2,22 +2,25 @@ from .menu import MenuItem, SubMenu, Cmd
 from view.registrazione_utente import ottieni_dati as get_reg_dati 
 from view.login_utente import ottieni_dati as get_log_dati
 from view.lista_eventi import eventi
-from view.input_ubicazione import menu, modifica_dati, inserimento_dati, elimina_dati
+from view.input_ubicazione import menu, modifica_dati, inserimento_dati, elimina_dati, mostra_dati
 from controller.user import UserRole
 
 # Creazione del menù ubicazione
 _cmd_inserisci_ubicazione = Cmd("Inserisci Ubicazione",inserimento_dati)
 _cmd_modifica_ubicazione = Cmd("Modifica Ubicazione",modifica_dati)
 _cmd_elimina_ubicazione = Cmd("Elimina Ubicazione",elimina_dati)
+_cmd_mostra_ubicazione = Cmd("Mostra Ubicazione",mostra_dati)
 
 _item_inserisci_ubicazione = MenuItem("Aggiungi Ubicazione",_cmd_inserisci_ubicazione,{UserRole.ADMIN, UserRole.VEND})
 _item_modifica_ubicazione = MenuItem("Modifica Ubicazione",_cmd_modifica_ubicazione,{UserRole.ADMIN, UserRole.VEND})
 _item_elimina_ubicazione = MenuItem("Elimina Ubicazione",_cmd_elimina_ubicazione,{UserRole.ADMIN, UserRole.VEND})
+_item_mostra_ubicazione = MenuItem("Mostra Ubicazione",_cmd_mostra_ubicazione,{UserRole.ADMIN, UserRole.VEND})
 
 menu_ubicazione = SubMenu("menù di ubicazione")
 menu_ubicazione.add_item(_item_inserisci_ubicazione)
 menu_ubicazione.add_item(_item_modifica_ubicazione)
 menu_ubicazione.add_item(_item_elimina_ubicazione)
+menu_ubicazione.add_item(_item_mostra_ubicazione)
 
 # Creazione del menù principale
 _cmd_menu_principale = Cmd("Lista Eventi", eventi)
