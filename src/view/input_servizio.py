@@ -1,51 +1,45 @@
 from collections import namedtuple
-from controller.servizio import inserimento_servizio
+from controller.db.db import ritorna_connessione
+from controller.servizio import inserimento_servizio, modifica_servizio, elimina_servizio, mostra_servizio
+from .input_utils import InputField, input_dati
 
-def menu_serv(next_menu = None) -> None:
-    if next_menu:
-        next_menu.run()
+
+_param = [
+        InputField('nome', 'nome servizio', None, None), 
+        InputField('descrizione', 'descrizione del servizio', None, None),
+        InputField('prezzo', 'prezzo', None, float),
+        InputField('quantita', 'quantità', None, None)
+    ]
 
 def inserimento_dati() -> None:
-    dict = input_dati()
+    dict = input_dati(_param)
     inserimento_servizio(dict)
 
 def modifica_dati() -> None:
-    pass
+    nome = ''
+    while not _check_servizio(nome):
+        nome = input("digita il nome dell'ubicazione da modificare: ")
+    dict = input_dati()
+    modifica_servizio(dict, nome)
 
 def elimina_dati() -> None:
-    pass
+    nome = ''
+    while not _check_servizio(nome):
+        nome = input("digita il nome dell'ubicazione da eliminare: ")
+    elimina_servizio(nome)
+
 def mostra_dati() -> None:
-    pass
-    
-def input_dati() -> dict:
-    """
-    Salva gli input del dizionario.
-    """
-    reg_param = {}
-    InputField = namedtuple('InputField', ['nome', 'etichetta', 'default', 'conv_func'])
-    param = [
-        InputField('nome', 'nome servizio', None, None), 
-        InputField('descrizione', 'descrizione del servizio', '', None),
-        InputField('prezzo', 'prezzo del servizio', None, float),
-        InputField('quantita', 'quantità', None, None)
-    ]
-    for input_el in param:
-        while True:
-            temp_val = input(f"{input_el.etichetta}(default: {input_el.default}): ")
-            if temp_val == '':
-                if input_el.default:
-                    reg_param[input_el.nome] = input_el.default
-                    break
-                else:
-                    print("è necessario specificare un valore")
-            if input_el.conv_func:
-                try:
-                    reg_param[input_el.nome] = input_el.conv_func(temp_val)
-                except ValueError:
-                    print("Errore nella conversione del tipo di dati")
-                else:
-                    break
-            else:
-                reg_param[input_el.nome] = temp_val
-                break
-    return reg_param
+    nome = ''
+    while not _check_servizio(nome):
+        nome = input("digita il nome dell'ubicazione da mostrare: ") 
+    mostra_servizio(nome)    
+
+def _check_servizio(nome: str) -> bool:
+    conn = ritorna_connessione()
+    cur = conn.cursor(dictionary = True)
+    cur.execute(f"""SELECT idServizio, nome, descrizione
+                FROM tbservizio
+                WHERE nome='{nome}';""")
+    data_row = cur.fetchone()
+    cur.close()
+    return data_row is not None

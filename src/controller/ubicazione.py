@@ -57,7 +57,7 @@ def elimina_ubicazione(nome: str) -> None:
             cur.execute(f"DELETE FROM tbsistabiliscein WHERE idVenditore={current_user.id} AND idUbicazione={row[i]};")
         print("Ubicazione eliminata con successo!")
     else:
-        print("L'ubicazione non è stata eliminata correttamente, riprova.")
+        print("L'ubicazione non è stata eliminata, riprova.")
     conn.commit()
     cur.close()
     print()
@@ -82,6 +82,7 @@ def mostra_ubicazione(nome: str) -> None:
         print("attiva: no")
     else:
         print("attiva: sì")
+    print()
 
 def _check_name(nome: str) -> bool:
     current_user = ottieni_utente()
