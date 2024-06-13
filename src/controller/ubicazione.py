@@ -54,7 +54,7 @@ def _check_name() -> bool:
     conn = ritorna_connessione()
     cur = conn.cursor()
     cur.execute(f"SELECT idUbicazione FROM tbsistabiliscein WHERE idVenditore={BaseUsers.id};")
-    row = cur.fetchone[0]
+    row = cur.fetchone()[0]
     cur.execute(f"SELECT nome FROM tbubicazione WHERE idUbicazione={row};")
     row = cur.fetchone()[0]
     cur.close()
