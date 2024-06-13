@@ -2,7 +2,7 @@ from .menu import MenuItem, SubMenu, Cmd
 from view.registrazione_utente import ottieni_dati as get_reg_dati 
 from view.login_utente import ottieni_dati as get_log_dati
 from view.lista_eventi import eventi
-from view.input_ubicazione import menu_ubi, modifica_dati as mod_ubi, inserimento_dati as ins_ubi, elimina_dati as del_ubi, mostra_dati as show_ubi
+from view.input_ubicazione import modifica_dati as mod_ubi, inserimento_dati as ins_ubi, elimina_dati as del_ubi, mostra_dati as show_ubi
 from view.input_servizio import menu_serv, inserimento_dati as ins_serv
 from controller.user import UserRole
 
@@ -32,16 +32,15 @@ menu_servizio = SubMenu("Menù di servizio")
 menu_servizio.add_item(_item_inserisci_servizio)
 
 # Creazione del menù principale
-_cmd_menu_principale = Cmd("Lista Eventi", eventi)
-_cmd_ubicazione = Cmd("Ubicazione", menu_ubi, next_menu = menu_ubicazione)
+_cmd_lista_eventi = Cmd("Lista Eventi", eventi)
 _cmd_servizio = Cmd("Servizio", menu_serv, next_menu = menu_servizio)
 
-_item_menu_principale = MenuItem("Lista eventi", _cmd_menu_principale, {UserRole.ADMIN, UserRole.VEND, UserRole.CLIENTE})
-_item_ubicazione = MenuItem("Gestisci ubicazioni", _cmd_ubicazione, {UserRole.ADMIN, UserRole.VEND})
+_item_lista_eventi = MenuItem("Lista eventi", _cmd_lista_eventi, {UserRole.ADMIN, UserRole.VEND, UserRole.CLIENTE})
+_item_ubicazione = MenuItem("Gestisci ubicazioni", menu_ubicazione, {UserRole.ADMIN, UserRole.VEND})
 _item_servizio = MenuItem("Gestisci servizio", _cmd_servizio, {UserRole.ADMIN, UserRole.VEND})
 
 menu_principale_app = SubMenu("Menù principale dell'applicazione")
-menu_principale_app.add_item(_item_menu_principale)
+menu_principale_app.add_item(_item_lista_eventi)
 menu_principale_app.add_item(_item_ubicazione)
 menu_principale_app.add_item(_item_servizio)
 
