@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Versione server:              10.6.18-MariaDB - mariadb.org binary distribution
+-- Versione server:              11.4.2-MariaDB - mariadb.org binary distribution
 -- S.O. server:                  Win64
 -- HeidiSQL Versione:            12.6.0.6765
 -- --------------------------------------------------------
@@ -28,8 +28,7 @@ CREATE TABLE IF NOT EXISTS `tbaccetta` (
   PRIMARY KEY (`idVenditore`,`idPagamento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dump dei dati della tabella km-0.tbaccetta: ~0 rows (circa)
-DELETE FROM `tbaccetta`;
+-- L’esportazione dei dati non era selezionata.
 
 -- Dump della struttura di tabella km-0.tbcliente
 DROP TABLE IF EXISTS `tbcliente`;
@@ -48,8 +47,7 @@ CREATE TABLE IF NOT EXISTS `tbcliente` (
   CONSTRAINT `FK_tbcliente_idCredential_tbcredential_idCredential` FOREIGN KEY (`idCredential`) REFERENCES `tbcredential` (`idCredential`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dump dei dati della tabella km-0.tbcliente: ~0 rows (circa)
-DELETE FROM `tbcliente`;
+-- L’esportazione dei dati non era selezionata.
 
 -- Dump della struttura di tabella km-0.tbcontiene
 DROP TABLE IF EXISTS `tbcontiene`;
@@ -59,8 +57,7 @@ CREATE TABLE IF NOT EXISTS `tbcontiene` (
   PRIMARY KEY (`idServizio`,`idOrdine`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dump dei dati della tabella km-0.tbcontiene: ~0 rows (circa)
-DELETE FROM `tbcontiene`;
+-- L’esportazione dei dati non era selezionata.
 
 -- Dump della struttura di tabella km-0.tbcrea
 DROP TABLE IF EXISTS `tbcrea`;
@@ -70,8 +67,7 @@ CREATE TABLE IF NOT EXISTS `tbcrea` (
   PRIMARY KEY (`idVenditore`,`idEvento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dump dei dati della tabella km-0.tbcrea: ~0 rows (circa)
-DELETE FROM `tbcrea`;
+-- L’esportazione dei dati non era selezionata.
 
 -- Dump della struttura di tabella km-0.tbcredential
 DROP TABLE IF EXISTS `tbcredential`;
@@ -84,11 +80,7 @@ CREATE TABLE IF NOT EXISTS `tbcredential` (
   UNIQUE KEY `idx_tbcredential_email_pswd` (`email`,`pswd`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dump dei dati della tabella km-0.tbcredential: ~2 rows (circa)
-DELETE FROM `tbcredential`;
-INSERT INTO `tbcredential` (`idCredential`, `pswd`, `email`, `attivo`) VALUES
-	(1, '1234', 'Sergio', 1),
-	(2, '1234', 'Gabriele', 1);
+-- L’esportazione dei dati non era selezionata.
 
 -- Dump della struttura di tabella km-0.tbeffettua
 DROP TABLE IF EXISTS `tbeffettua`;
@@ -98,8 +90,7 @@ CREATE TABLE IF NOT EXISTS `tbeffettua` (
   `idPagamento` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dump dei dati della tabella km-0.tbeffettua: ~0 rows (circa)
-DELETE FROM `tbeffettua`;
+-- L’esportazione dei dati non era selezionata.
 
 -- Dump della struttura di tabella km-0.tbevento
 DROP TABLE IF EXISTS `tbevento`;
@@ -110,14 +101,10 @@ CREATE TABLE IF NOT EXISTS `tbevento` (
   `dataFine` datetime NOT NULL,
   `nome` varchar(255) NOT NULL,
   `condiviso` tinyint(1) NOT NULL,
-  `idCredential` int(11) NOT NULL,
-  PRIMARY KEY (`idEvento`),
-  KEY `FK_tbevento_idCredential_tbcredential_idCredential` (`idCredential`) USING BTREE,
-  CONSTRAINT `FK_tbevento_idCredential_tbcredential_idCredential` FOREIGN KEY (`idCredential`) REFERENCES `tbcredential` (`idCredential`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  PRIMARY KEY (`idEvento`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dump dei dati della tabella km-0.tbevento: ~0 rows (circa)
-DELETE FROM `tbevento`;
+-- L’esportazione dei dati non era selezionata.
 
 -- Dump della struttura di tabella km-0.tbmodalitapagamento
 DROP TABLE IF EXISTS `tbmodalitapagamento`;
@@ -127,8 +114,7 @@ CREATE TABLE IF NOT EXISTS `tbmodalitapagamento` (
   PRIMARY KEY (`idPagamento`,`idOrdine`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dump dei dati della tabella km-0.tbmodalitapagamento: ~0 rows (circa)
-DELETE FROM `tbmodalitapagamento`;
+-- L’esportazione dei dati non era selezionata.
 
 -- Dump della struttura di tabella km-0.tboffre
 DROP TABLE IF EXISTS `tboffre`;
@@ -140,8 +126,7 @@ CREATE TABLE IF NOT EXISTS `tboffre` (
   PRIMARY KEY (`idVenditore`,`idServizio`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dump dei dati della tabella km-0.tboffre: ~0 rows (circa)
-DELETE FROM `tboffre`;
+-- L’esportazione dei dati non era selezionata.
 
 -- Dump della struttura di tabella km-0.tbordine
 DROP TABLE IF EXISTS `tbordine`;
@@ -155,8 +140,7 @@ CREATE TABLE IF NOT EXISTS `tbordine` (
   CONSTRAINT `FK_tbordine_idRecensione_tbpagameneto_idPagamento` FOREIGN KEY (`idRecensione`) REFERENCES `tbpagamento` (`idPagamento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dump dei dati della tabella km-0.tbordine: ~0 rows (circa)
-DELETE FROM `tbordine`;
+-- L’esportazione dei dati non era selezionata.
 
 -- Dump della struttura di tabella km-0.tbpagamento
 DROP TABLE IF EXISTS `tbpagamento`;
@@ -167,8 +151,7 @@ CREATE TABLE IF NOT EXISTS `tbpagamento` (
   PRIMARY KEY (`idPagamento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dump dei dati della tabella km-0.tbpagamento: ~0 rows (circa)
-DELETE FROM `tbpagamento`;
+-- L’esportazione dei dati non era selezionata.
 
 -- Dump della struttura di tabella km-0.tbrecensione
 DROP TABLE IF EXISTS `tbrecensione`;
@@ -182,8 +165,7 @@ CREATE TABLE IF NOT EXISTS `tbrecensione` (
   CONSTRAINT `FK_tbrecensione_idCliente_tbcliente_idCliente` FOREIGN KEY (`idCliente`) REFERENCES `tbcliente` (`idCliente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dump dei dati della tabella km-0.tbrecensione: ~0 rows (circa)
-DELETE FROM `tbrecensione`;
+-- L’esportazione dei dati non era selezionata.
 
 -- Dump della struttura di tabella km-0.tbservizio
 DROP TABLE IF EXISTS `tbservizio`;
@@ -192,10 +174,9 @@ CREATE TABLE IF NOT EXISTS `tbservizio` (
   `descrizione` text NOT NULL,
   `nome` varchar(255) NOT NULL,
   PRIMARY KEY (`idServizio`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dump dei dati della tabella km-0.tbservizio: ~0 rows (circa)
-DELETE FROM `tbservizio`;
+-- L’esportazione dei dati non era selezionata.
 
 -- Dump della struttura di tabella km-0.tbsirivolgea
 DROP TABLE IF EXISTS `tbsirivolgea`;
@@ -205,8 +186,7 @@ CREATE TABLE IF NOT EXISTS `tbsirivolgea` (
   PRIMARY KEY (`idServizio`,`idOrdine`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dump dei dati della tabella km-0.tbsirivolgea: ~0 rows (circa)
-DELETE FROM `tbsirivolgea`;
+-- L’esportazione dei dati non era selezionata.
 
 -- Dump della struttura di tabella km-0.tbsistabiliscein
 DROP TABLE IF EXISTS `tbsistabiliscein`;
@@ -216,8 +196,7 @@ CREATE TABLE IF NOT EXISTS `tbsistabiliscein` (
   PRIMARY KEY (`idVenditore`,`idUbicazione`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dump dei dati della tabella km-0.tbsistabiliscein: ~0 rows (circa)
-DELETE FROM `tbsistabiliscein`;
+-- L’esportazione dei dati non era selezionata.
 
 -- Dump della struttura di tabella km-0.tbubicazione
 DROP TABLE IF EXISTS `tbubicazione`;
@@ -231,10 +210,9 @@ CREATE TABLE IF NOT EXISTS `tbubicazione` (
   `orario` text NOT NULL,
   `attiva` tinyint(1) NOT NULL,
   PRIMARY KEY (`idUbicazione`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dump dei dati della tabella km-0.tbubicazione: ~0 rows (circa)
-DELETE FROM `tbubicazione`;
+-- L’esportazione dei dati non era selezionata.
 
 -- Dump della struttura di tabella km-0.tbvenditore
 DROP TABLE IF EXISTS `tbvenditore`;
@@ -251,8 +229,7 @@ CREATE TABLE IF NOT EXISTS `tbvenditore` (
   CONSTRAINT `FK_tbvenditore_idCredential_tbcredential_idCredential` FOREIGN KEY (`idCredential`) REFERENCES `tbcredential` (`idCredential`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dump dei dati della tabella km-0.tbvenditore: ~0 rows (circa)
-DELETE FROM `tbvenditore`;
+-- L’esportazione dei dati non era selezionata.
 
 -- Dump della struttura di vista km-0.vwadmin
 DROP VIEW IF EXISTS `vwadmin`;
@@ -261,7 +238,7 @@ CREATE TABLE `vwadmin` (
 	`idCredential` INT(11) NOT NULL,
 	`email` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
 	`pswd` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
-	`attivo` TINYINT(1) NULL
+	`attivo` TINYINT(1) NOT NULL
 ) ENGINE=MyISAM;
 
 -- Dump della struttura di vista km-0.vwcliente
@@ -278,22 +255,7 @@ CREATE TABLE `vwcliente` (
 	`telefono` VARCHAR(14) NOT NULL COLLATE 'latin1_swedish_ci',
 	`email` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
 	`pswd` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
-	`attivo` TINYINT(1) NULL
-) ENGINE=MyISAM;
-
--- Dump della struttura di vista km-0.vwvenditore
-DROP VIEW IF EXISTS `vwvenditore`;
--- Creazione di una tabella temporanea per risolvere gli errori di dipendenza della vista
-CREATE TABLE `vwvenditore` (
-	`idVenditore` INT(11) NOT NULL,
-	`sitoweb` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
-	`partitaIVA` INT(11) NOT NULL,
-	`ragioneSociale` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
-	`CF` VARCHAR(16) NOT NULL COLLATE 'latin1_swedish_ci',
-	`telefono` VARCHAR(14) NOT NULL COLLATE 'latin1_swedish_ci',
-	`email` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
-	`pswd` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
-	`attivo` TINYINT(1) NULL
+	`attivo` TINYINT(1) NOT NULL
 ) ENGINE=MyISAM;
 
 -- Dump della struttura di vista km-0.vwruoli_attivi
@@ -306,9 +268,20 @@ CREATE TABLE `vwruoli_attivi` (
 	`Ruolo` VARCHAR(1) NOT NULL COLLATE 'utf8mb4_general_ci'
 ) ENGINE=MyISAM;
 
--- Rimozione temporanea di tabella e creazione della struttura finale della vista
-DROP TABLE IF EXISTS `vwruoli_attivi`;
-CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vwruoli_attivi` AS select `vwvenditore`.`idVenditore` AS `id`,`vwvenditore`.`email` AS `email`,`vwvenditore`.`pswd` AS `pswd`,'V' AS `Ruolo` from `vwvenditore` where `vwvenditore`.`attivo` = 1 union select `vwcliente`.`idCliente` AS `id`,`vwcliente`.`email` AS `email`,`vwcliente`.`pswd` AS `pswd`,'C' AS `Ruolo` from `vwcliente` where `vwcliente`.`attivo` = 1 union select `vwadmin`.`idCredential` AS `id`,`vwadmin`.`email` AS `email`,`vwadmin`.`pswd` AS `pswd`,'A' AS `Ruolo` from `vwadmin` where `vwadmin`.`attivo` = 1;
+-- Dump della struttura di vista km-0.vwvenditore
+DROP VIEW IF EXISTS `vwvenditore`;
+-- Creazione di una tabella temporanea per risolvere gli errori di dipendenza della vista
+CREATE TABLE `vwvenditore` (
+	`idVenditore` INT(11) NOT NULL,
+	`sitoweb` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
+	`partitaIVA` VARCHAR(25) NOT NULL COLLATE 'latin1_swedish_ci',
+	`ragioneSociale` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
+	`CF` VARCHAR(16) NOT NULL COLLATE 'latin1_swedish_ci',
+	`telefono` VARCHAR(14) NOT NULL COLLATE 'latin1_swedish_ci',
+	`email` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
+	`pswd` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
+	`attivo` TINYINT(1) NOT NULL
+) ENGINE=MyISAM;
 
 -- Rimozione temporanea di tabella e creazione della struttura finale della vista
 DROP TABLE IF EXISTS `vwadmin`;
@@ -317,6 +290,10 @@ CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vwadmin` AS select `tbcred
 -- Rimozione temporanea di tabella e creazione della struttura finale della vista
 DROP TABLE IF EXISTS `vwcliente`;
 CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vwcliente` AS select `tbcliente`.`idCliente` AS `idCliente`,`tbcliente`.`citta` AS `citta`,`tbcliente`.`provincia` AS `provincia`,`tbcliente`.`via` AS `via`,`tbcliente`.`nome` AS `nome`,`tbcliente`.`cognome` AS `cognome`,`tbcliente`.`CF` AS `CF`,`tbcliente`.`telefono` AS `telefono`,`tbcredential`.`email` AS `email`,`tbcredential`.`pswd` AS `pswd`,`tbcredential`.`attivo` AS `attivo` from (`tbcliente` join `tbcredential` on(`tbcredential`.`idCredential` = `tbcliente`.`idCredential`));
+
+-- Rimozione temporanea di tabella e creazione della struttura finale della vista
+DROP TABLE IF EXISTS `vwruoli_attivi`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vwruoli_attivi` AS select `vwvenditore`.`idVenditore` AS `id`,`vwvenditore`.`email` AS `email`,`vwvenditore`.`pswd` AS `pswd`,'V' AS `Ruolo` from `vwvenditore` where `vwvenditore`.`attivo` = 1 union select `vwcliente`.`idCliente` AS `id`,`vwcliente`.`email` AS `email`,`vwcliente`.`pswd` AS `pswd`,'C' AS `Ruolo` from `vwcliente` where `vwcliente`.`attivo` = 1 union select `vwadmin`.`idCredential` AS `id`,`vwadmin`.`email` AS `email`,`vwadmin`.`pswd` AS `pswd`,'A' AS `Ruolo` from `vwadmin` where `vwadmin`.`attivo` = 1;
 
 -- Rimozione temporanea di tabella e creazione della struttura finale della vista
 DROP TABLE IF EXISTS `vwvenditore`;

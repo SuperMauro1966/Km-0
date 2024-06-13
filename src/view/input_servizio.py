@@ -31,7 +31,7 @@ def elimina_dati() -> None:
 def mostra_dati() -> None:
     nome = ''
     while not _check_servizio(nome):
-        nome = input("digita il nome dell'ubicazione da mostrare: ") 
+        nome = input("digita il nome del servizio da mostrare: ") 
     mostra_servizio(nome)    
 
 def _check_servizio(nome: str) -> bool:
