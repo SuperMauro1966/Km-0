@@ -16,11 +16,11 @@ def inserimento_servizio(dati_servizio: dict) -> None:
     conn.commit()
     cur.close() 
 
-def modifica_ubicazione() -> None:
+def modifica_servizio() -> None:
     pass
 
-def elimina_ubicazione() -> None: 
+def elimina_servizio() -> None: 
     pass
     
-def mostra_ubicazione() -> dict:
+def mostra_servizio() -> dict:
     pass

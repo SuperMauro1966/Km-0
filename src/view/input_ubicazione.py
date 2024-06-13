@@ -4,7 +4,7 @@ from controller.ubicazione import inserimento_ubicazione, modifica_ubicazione, e
 from .input_utils import InputField, input_dati
 
 
-param = [
+_param = [
         InputField('nome', 'nome ubicazione', None, None), 
         InputField('citta', 'città', None, None),
         InputField('provincia', 'provincia', None, None),
@@ -15,29 +15,29 @@ param = [
     ]
 
 def inserimento_dati() -> None:
-    dict = input_dati()
+    dict = input_dati(_param)
     inserimento_ubicazione(dict)
 
 def modifica_dati() -> None:
     nome = ''
-    while not check_ubicazione(nome):
+    while not _check_ubicazione(nome):
         nome = input("digita il nome dell'ubicazione da modificare: ")
     dict = input_dati()
     modifica_ubicazione(dict, nome)
 
 def elimina_dati() -> None:
     nome = ''
-    while not check_ubicazione(nome):
+    while not _check_ubicazione(nome):
         nome = input("digita il nome dell'ubicazione da eliminare: ")
     elimina_ubicazione(nome)
 
 def mostra_dati() -> None:
     nome = ''
-    while not check_ubicazione(nome):
+    while not _check_ubicazione(nome):
         nome = input("digita il nome dell'ubicazione da mostrare: ") 
     mostra_ubicazione(nome)    
 
-def check_ubicazione(nome: str) -> bool:
+def _check_ubicazione(nome: str) -> bool:
     conn = ritorna_connessione()
     cur = conn.cursor(dictionary = True)
     cur.execute(f"""SELECT idUbicazione, nome, citta, provincia, via, fissa, orario, attiva

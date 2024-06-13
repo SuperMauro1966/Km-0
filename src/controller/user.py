@@ -5,7 +5,7 @@ from .db.admin_db import carica_admin
 
 _current_user = None
 
-def carica_user(id: int, ruolo: UserRole):
+def carica_user(id: int, ruolo: UserRole) -> None:
     """
     Salva i campi in una classe.
     """
@@ -23,3 +23,9 @@ def ottieni_ruolo() -> UserRole:
     Restituisce il ruolo dell'utente che ha appena effettuato l'accesso.
     """
     return _current_user.ruolo
+
+def ottieni_utente() -> UserRole:
+    """
+    Restituisce l'utente coi suoi campi.
+    """
+    return _current_user
