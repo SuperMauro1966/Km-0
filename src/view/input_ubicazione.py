@@ -9,9 +9,9 @@ _param = [
         InputField('citta', 'città', None, None),
         InputField('provincia', 'provincia', None, None),
         InputField('via', 'via', None, None),
-        InputField('fissa', 'ubicazione fissa', None, int),
+        InputField('fissa', 'ubicazione fissa', None, bool),
         InputField('orario', "orario di apertura dell'ubicazione", None, None),
-        InputField('attivo', 'ubicazione attiva', 0, int)
+        InputField('attivo', 'ubicazione attiva', 0, bool)
     ]
 
 def inserimento_dati() -> None:
